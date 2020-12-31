@@ -33,9 +33,10 @@ class LogInAccount extends React.Component {
 
     render() {
         return(
-            <Container className="page-hero d-flex align-items-center justify-content-center">
+            <Container /*className="page-hero d-flex align-items-center justify-content-center"*/ style={{width:"400px"}}>
                 <div className={cx('logInbackground')}>
                     <h2>Welcome Back!</h2>
+                    <div>
                     <Form onSubmit={this.handleSubmit}>
                         <FormGroup>
                             <Label for="email">Email</Label>
@@ -49,6 +50,7 @@ class LogInAccount extends React.Component {
                             <Button color="light" type="submit">Sign In</Button>
                         </div>
                     </Form>
+                    </div>
                 </div>
             </Container>
         );

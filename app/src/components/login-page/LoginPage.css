@@ -1,0 +1,17 @@
+.ca {
+    margin-top: 50px;
+    margin-bottom: 50px;
+    align-content: center;
+    /* background-color: lightgray;  */
+}
+
+/*.background { 
+    background-image: url("./backgroundlogin.jpg");
+}*/
+
+.hehe {
+    border-top-right-radius: 5%;
+    border-bottom-right-radius: 5%;
+    border-top-left-radius: 5%;
+    border-bottom-left-radius: 5%;
+}
