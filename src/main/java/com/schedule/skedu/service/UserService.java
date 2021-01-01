@@ -37,4 +37,12 @@ public class UserService {
     public Optional<User> findUserByEmailAndPassword(String email, String password) {
         return userRepository.findByEmailAndPassword(email, password);
     }
+
+    public User userIsSignedIn(User user) {
+        return userRepository.save(user);
+    }
+
+    public User userTotalTime(User user) {
+        return userRepository.save(user);
+    }
 }
