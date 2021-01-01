@@ -14,7 +14,6 @@ class LogInAccount extends React.Component {
     async handleSubmit(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-        console.log('/api/verifyUser?email=' + data.get('email') + '&password=' + data.get('password'));
         const response = await fetch('/api/verifyUser?email=' + data.get('email') + '&password=' + data.get('password'), {
             method: 'GET',
             headers: {
@@ -25,6 +24,13 @@ class LogInAccount extends React.Component {
         const body = await response.json();
         this.setState({isSignInSuccessful: body});
         if (this.state.isSignInSuccessful) {
+            const updateSignIn = await fetch('/api/userIsSignedIn?email=' + data.get('email') + '&signIn=true', {
+                method: 'PUT',
+                headers: {
+                    'Accept': 'application/json',  //receiving data in JSON format in browser
+                    'Content-Type': 'application/json'  //sending data in JSON format
+                }
+            });
             this.props.history.push('/home');
         } else {
             alert("Sign in credentials did not match, please try again.");

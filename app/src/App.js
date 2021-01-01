@@ -1,6 +1,7 @@
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 import LoginPage from './components/login-page/LoginPage'; 
+import HomePageHeader from './components/HomePageHeader';
 import './App.css';
 
 class App extends React.Component {
@@ -9,7 +10,7 @@ class App extends React.Component {
       <Router>
         <Switch>
           <Route path='/' exact={true} component={LoginPage} />
-          {/* <Route path='/home' exact={true} component={HomePage} /> */}
+          <Route path='/home' exact={true} component={HomePageHeader} />
         </Switch>
       </Router>
     );

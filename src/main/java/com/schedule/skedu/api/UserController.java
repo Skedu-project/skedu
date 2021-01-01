@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -57,5 +58,21 @@ public class UserController {
             bool = false;
         }
         return bool;
+    }
+
+    @PutMapping("/userIsSignedIn")
+    public boolean userIsSignedIn(@RequestParam String email, @RequestParam boolean signIn) {
+        User user = userService.findUserByEmail(email).get();
+        user.setIsSignedIn(signIn);
+        User updatedUser = userService.userIsSignedIn(user);
+        return updatedUser.getIsSignedIn();
+    }
+
+    @PutMapping("/userTotalTime")
+    public int userTotalTime(@RequestParam String email, @RequestParam int totalTime) {
+        User user = userService.findUserByEmail(email).get();
+        user.setTotalTime(totalTime);
+        User updatedUser = userService.userTotalTime(user);
+        return updatedUser.getTotalTime();
     }
 }

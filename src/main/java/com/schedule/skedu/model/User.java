@@ -9,10 +9,10 @@ import javax.persistence.Table;
 import org.hibernate.annotations.NaturalId;
 
 @Entity // makes a table from the class
-@Table(name="User")  //names the table as user
+@Table(name = "User") // names the table as user
 public class User {
-    @Id //says that it is the identifier so it has a unique value
-    @GeneratedValue(strategy = GenerationType.AUTO)  //generates the value for the id
+    @Id // says that it is the identifier so it has a unique value
+    @GeneratedValue(strategy = GenerationType.AUTO) // generates the value for the id
     private Long id;
 
     private String firstName;
@@ -20,11 +20,29 @@ public class User {
 
     @NaturalId
     private String email;
-    
+
     private String password;
+    private boolean isSignedIn;
+    private int totalTime;
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public int getTotalTime() {
+        return totalTime;
+    }
+
+    public void setTotalTime(int totalTime) {
+        this.totalTime = totalTime;
+    }
+
+    public boolean getIsSignedIn() {
+        return isSignedIn;
+    }
+
+    public void setIsSignedIn(boolean isSignedIn) {
+        this.isSignedIn = isSignedIn;
     }
 
     public String getPassword() {
