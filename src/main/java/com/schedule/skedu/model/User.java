@@ -14,13 +14,11 @@ public class User {
     @Id // says that it is the identifier so it has a unique value
     @GeneratedValue(strategy = GenerationType.AUTO) // generates the value for the id
     private Long id;
-
     private String firstName;
     private String lastName;
-
+    private int currentGradeLevel;
     @NaturalId
     private String email;
-
     private String password;
     private boolean isSignedIn;
     private int totalTime;
@@ -43,6 +41,14 @@ public class User {
 
     public void setIsSignedIn(boolean isSignedIn) {
         this.isSignedIn = isSignedIn;
+    }
+    
+    public int getCurrentGradeLevel() {
+        return currentGradeLevel;
+    }
+
+    public void setCurrentGradeLevel(int currentGradeLevel) {
+        this.currentGradeLevel = currentGradeLevel;
     }
 
     public String getPassword() {
@@ -80,8 +86,5 @@ public class User {
     public void setFirstName(String firstName) {
         this.firstName = firstName;
     }
-    @Override
-	public String toString() {
-		return "Student [id=" + id + ", name=" + firstName + " " + lastName + ", email=" + email + ", password=" + password + "]";
-	}
+  
 }
