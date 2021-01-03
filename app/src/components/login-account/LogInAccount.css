@@ -3,10 +3,9 @@
     align-content: center;
     border-top-left-radius: 5%;
     border-bottom-left-radius: 5%;
-    border-top-right-radius: 5%;
-    border-bottom-right-radius: 5%;
     height: 574px;
-    width: 400px; 
-    left: 200px;
+    /*width: 400px;
+    left: 200px;*/
     padding: 50px;
+    padding-top: 150px;
 }
