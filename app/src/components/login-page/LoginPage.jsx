@@ -14,15 +14,23 @@ class LoginPage extends React.Component {
     }
 
     render() {
+        // const backStyle = {
+        //     backgroundImage: "url(https://wallpaperaccess.com/full/1236480.jpg)", 
+        //     backgroundPosition: 'center',
+        //     backgroundSize: 'cover',
+        //     backgroundRepeat: 'no-repeat'
+        // };
 
         return(
-        <div>
-            <Container className={cx('ca')} > 
-                <Row xs="2" style={{margin:"0px"}}>
-                    <Col><div><LoginAccount /></div></Col>
-                    <Col><div className={cx('hehe')} style={{backgroundColor:"lightgray", padding: "30px"}}><CreateAccount /></div></Col>
-                </Row>
-            </Container>
+        <div style={{height: window.innerHeight}}>
+            <div className="h-100 d-flex justify-content-center align-items-center">
+                <Container className={"container", cx('ca')}> 
+                    <div className="row m-0">
+                        <Col className="col-5 m-0 p-0"><div><LoginAccount /></div></Col>
+                        <Col className="col m-0 p-0"><div className={cx('hehe')} style={{backgroundColor:"lightgray", padding: "30px"}}><CreateAccount /></div></Col>
+                    </div>
+                </Container>
+            </div>
         </div>
         )
     }

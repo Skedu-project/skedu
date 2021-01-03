@@ -1,6 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Button, Container, Form, FormGroup, Input, Label } from 'reactstrap';
+import { withCookies } from 'react-cookie';
 import classNames from 'classnames/bind';
 import styles from'./LogInAccount.css';
 const cx = classNames.bind(styles);
@@ -31,6 +32,8 @@ class LogInAccount extends React.Component {
                     'Content-Type': 'application/json'  //sending data in JSON format
                 }
             });
+            const cookie = this.props.cookies;
+            cookie.set('email', data.get('email'));
             this.props.history.push('/home');
         } else {
             alert("Sign in credentials did not match, please try again.");
@@ -39,18 +42,18 @@ class LogInAccount extends React.Component {
 
     render() {
         return(
-            <Container /*className="page-hero d-flex align-items-center justify-content-center"*/ style={{width:"400px"}}>
-                <div className={cx('logInbackground')}>
-                    <h2>Welcome Back!</h2>
+            <Container /*className="page-hero d-flex align-items-center justify-content-center"*/ className="m-0 p-0" /*style={{width:"400px"}}*/>
+                <div className="m-0 p-0" className={cx('logInbackground')}>
+                    <h2 style={{color: "white", textAlign: "center"}}>Welcome Back!</h2>
                     <div>
                     <Form onSubmit={this.handleSubmit}>
                         <FormGroup>
                             <Label for="email">Email</Label>
-                            <Input type="email" name="email" id="email" />
+                            <Input type="email" name="email" id="email"/>
                         </FormGroup>
                         <FormGroup>
                             <Label for="password">Password</Label>
-                            <Input type="password" name="password" id="password" />
+                            <Input type="password" name="password" id="password"/>
                         </FormGroup>
                         <div style={{textAlign: "center"}}>
                             <Button color="light" type="submit">Sign In</Button>
@@ -63,4 +66,4 @@ class LogInAccount extends React.Component {
     }
 }
 
-export default withRouter(LogInAccount);
+export default withCookies(withRouter(LogInAccount));
