@@ -18,6 +18,8 @@ class HomePageHeader extends React.Component {
         this.switchFadeInState = this.switchFadeInState.bind(this);
         this.handleTotalTime = this.handleTotalTime.bind(this);
         this.handleSignOut = this.handleSignOut.bind(this);
+        this.state = {allSubjects: []};  
+        this.getAllSubjects = this.getAllSubjects.bind(this);
     }
     changeDate() {
         this.setState({date: new Date().toDateString()});
@@ -41,13 +43,15 @@ class HomePageHeader extends React.Component {
         if(this.state.userGradeLevel != 0) {
             this.setState({popUp: false});
         } else {
-            this.setState({popUp: true});
+            this.setState({popUp: true}); 
         }
     }
+       
     switchFadeInState() {
         var opp = !this.state.fadeIn;
         this.setState({fadeIn: opp});
     }
+
     async handleTotalTime(event) {
         event.preventDefault();
         const data = new FormData(event.target);
@@ -81,6 +85,23 @@ class HomePageHeader extends React.Component {
             alert("There is something wrong with the Sign out.")
         }
     }
+
+    async getAllSubjects(){
+        debugger; 
+        const response = await fetch('/api/subjects', {
+            method: 'GET', 
+            headers: {
+                'Accept': 'application/json',  //receiving data in JSON format in browser
+                'Content-Type': 'application/json'  //sending data in JSON format
+            }
+        }); 
+
+        const body = await response.json();
+        debugger; 
+        this.setState({allSubjects: body});
+    }
+
+    
     render() {
         const headerStyle = {
             backgroundColor: "#B8B8B8",
