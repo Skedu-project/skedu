@@ -17,9 +17,7 @@ class HomePageHeader extends React.Component {
         };
         this.switchFadeInState = this.switchFadeInState.bind(this);
         this.handleTotalTime = this.handleTotalTime.bind(this);
-        this.handleSignOut = this.handleSignOut.bind(this);
-        this.state = {allSubjects: []};  
-        this.getAllSubjects = this.getAllSubjects.bind(this);
+        this.handleSignOut = this.handleSignOut.bind(this); 
     }
     changeDate() {
         this.setState({date: new Date().toDateString()});
@@ -27,7 +25,7 @@ class HomePageHeader extends React.Component {
     changeTime() {
         this.setState({time: new Date().toLocaleTimeString('en-US')});
     }
-    async componentDidMount() {
+    async componentWillMount() {
         setInterval(this.changeDate.bind(this), 60000);
         setInterval(this.changeTime.bind(this), 1000);
         const response = await fetch('/api/usersByEmail?email=' + this.state.cookie.get('email') + '&totalTime=', {
@@ -84,21 +82,6 @@ class HomePageHeader extends React.Component {
         } else {
             alert("There is something wrong with the Sign out.")
         }
-    }
-
-    async getAllSubjects(){
-        debugger; 
-        const response = await fetch('/api/subjects', {
-            method: 'GET', 
-            headers: {
-                'Accept': 'application/json',  //receiving data in JSON format in browser
-                'Content-Type': 'application/json'  //sending data in JSON format
-            }
-        }); 
-
-        const body = await response.json();
-        debugger; 
-        this.setState({allSubjects: body});
     }
 
     

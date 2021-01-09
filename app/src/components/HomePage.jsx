@@ -1,9 +1,9 @@
 import React from 'react';
-import { withRouter } from 'react-router-dom';
-import { CookiesProvider, withCookies } from 'react-cookie';
+import { withCookies } from 'react-cookie';
 import { Container, Col, Row } from 'reactstrap'; 
 import HomePageHeader from './home-page-header/HomePageHeader';
 import HomePageAssessments from './home-page-assessments/HomePageAssessments';
+import LeftPanel from './left-panel/LeftPanel'; 
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -28,7 +28,9 @@ class HomePage extends React.Component {
         return(
             <Container fluid className="m-0" style={largeContainer}>
                 <Row style={largeContainer}>
-                    <Col id="subject nav bar" className="p-1 border-right" md={2} style={{backgroundColor: "whiteSmoke"}}> subject nav bar </Col>
+                    <Col id="subject nav bar" className="p-1 border-right" md={2} style={{backgroundColor: "whiteSmoke"}}>
+                        <LeftPanel />
+                    </Col>
                     <Col id="right" className="p-1">
                         <Container fluid style={smallerContainer} className="m-0 p-0">
                             <Row><Col id="header"><HomePageHeader /></Col></Row>
