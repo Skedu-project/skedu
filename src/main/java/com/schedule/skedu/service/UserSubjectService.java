@@ -46,6 +46,17 @@ public class UserSubjectService {
         userSubjectDetail.setSubject(subjectInfo);
         userSubjectDetail.setUserGradeLevel(userSubject.getUserGradeLevel());
         userSubjectDetail.setGoalGrade(userSubject.getGoalGrade());
+        userSubjectDetail.setColorId(userSubject.getColorId());
         return userSubjectDetail;
+    }
+
+    public Optional<UserSubject> getUserSubjectId(Long userId, String subjectName) {
+        Subject subject = subjectRepository.findByName(subjectName);
+        String subjectId = subject.getId();
+        return userSubjectRepository.findBySubjectIdAndUserId(subjectId, userId);
+    } 
+
+    public Optional<UserSubject> getSubjectById(Long id) {
+        return userSubjectRepository.findById(id);
     }
 }

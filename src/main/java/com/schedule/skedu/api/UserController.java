@@ -49,15 +49,15 @@ public class UserController {
     }
 
     @GetMapping("/verifyUser")
-    public boolean findUserByEmailAndPassword(@RequestParam String email, @RequestParam String password) {
-        Optional<User> val = userService.findUserByEmailAndPassword(email, password);
-        boolean bool = false;
-        if (val.isPresent()) {
-            bool = true;
-        } else {
-            bool = false;
-        }
-        return bool;
+    public Optional<User> findUserByEmailAndPassword(@RequestParam String email, @RequestParam String password) {
+        return userService.findUserByEmailAndPassword(email, password);
+        // Long id;
+        // if (val.isPresent()) {
+        //     id = val.getId();
+        // } else {
+        //     id = null;
+        // }
+        //return val;
     }
 
     @PutMapping("/userIsSignedIn")

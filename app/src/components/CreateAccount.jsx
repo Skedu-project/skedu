@@ -22,7 +22,7 @@ class CreateAccount extends React.Component {
                 password: data.get('password')
             }
             //const value = Object.fromEntries(data2.entries());  //converts form file type into Object
-            await fetch('/api/users', {
+            const response = await fetch('/api/users', {
                 method: 'POST',
                 headers: {
                     'Accept': 'application/json',  //receiving data in JSON format in browser
@@ -30,6 +30,8 @@ class CreateAccount extends React.Component {
                 },
                 body: JSON.stringify(data2)
             });
+            const body = await response.json();
+            cookie.set('id', body.id);
         }
         else {
             alert("passwords do not match");

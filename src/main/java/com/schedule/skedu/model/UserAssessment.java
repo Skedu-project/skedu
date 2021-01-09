@@ -16,14 +16,21 @@ public class UserAssessment {
     private Long id;
     private Long userId;
     private Date date;
-    private String subjectId;
-    private String subjectName;
+    private Long userSubjectId;
     private String assessmentTypeName;
     private double totalPointsAvailable;
     private double priority;
 
     public Long getId() {
         return id;
+    }
+
+    public Long getUserSubjectId() {
+        return userSubjectId;
+    }
+
+    public void setUserSubjectId(Long userSubjectId) {
+        this.userSubjectId = userSubjectId;
     }
 
     public String getAssessmentTypeName() {
@@ -49,23 +56,7 @@ public class UserAssessment {
     public void setTotalPointsAvailable(double totalPointsAvailable) {
         this.totalPointsAvailable = totalPointsAvailable;
     }
-
-    public String getSubjectName() {
-        return subjectName;
-    }
-
-    public void setSubjectName(String subjectName) {
-        this.subjectName = subjectName;
-    }
-
-    public String getSubjectId() {
-        return subjectId;
-    }
-
-    public void setSubjectId(String subjectId) {
-        this.subjectId = subjectId;
-    }
-
+    
     public Date getDate() {
         return date;
     }

@@ -16,14 +16,14 @@ class HomePage extends React.Component {
             return null;
         }
         const smallerContainer = {
-            height: "650px",
+            height: "83vh",
            /* width: (window.innerWidth-30),*/
             position: "relative"
         };
         const largeContainer = {
             height: (window.innerHeight-8),
             width: (window.innerWidth-12),
-            position: "relative"
+            position: "relative",
         };
         return(
             <Container fluid className="m-0" style={largeContainer}>
@@ -34,7 +34,7 @@ class HomePage extends React.Component {
                             <Row><Col id="header"><HomePageHeader /></Col></Row>
                             <Row className="m-0" id="bot_right" style={smallerContainer}>
                                 <Col id="HW time" md={8}> HW time </Col>
-                                <Col style={{backgroundColor: "whiteSmoke"}}><HomePageAssessments /></Col>
+                                <Col className="p-0"><HomePageAssessments /></Col>
                             </Row>
                         </Container>
                     </Col>

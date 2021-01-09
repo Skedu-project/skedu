@@ -23,7 +23,11 @@ class LogInAccount extends React.Component {
             }
         });
         const body = await response.json();
-        this.setState({isSignInSuccessful: body});
+        if(body != null) {
+            this.setState({isSignInSuccessful: true});
+        } else {
+            this.setState({isSignInSuccessful: false});
+        }
         if (this.state.isSignInSuccessful) {
             const updateSignIn = await fetch('/api/userIsSignedIn?email=' + data.get('email') + '&signIn=true', {
                 method: 'PUT',
@@ -34,6 +38,8 @@ class LogInAccount extends React.Component {
             });
             const cookie = this.props.cookies;
             cookie.set('email', data.get('email'));
+            console.log(body);
+            cookie.set('id', body.id);
             this.props.history.push('/home');
         } else {
             alert("Sign in credentials did not match, please try again.");

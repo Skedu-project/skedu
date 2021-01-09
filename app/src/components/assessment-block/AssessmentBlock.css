@@ -1,0 +1,6 @@
+.checkButton:hover {
+    opacity: 1;
+}
+.checkButton {
+    opacity: 0.7;
+}
