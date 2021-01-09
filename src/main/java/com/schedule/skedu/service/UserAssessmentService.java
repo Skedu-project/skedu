@@ -20,4 +20,8 @@ public class UserAssessmentService {
     public UserAssessment addUserAssessment(UserAssessment userAssessment) {
         return userAssessmentRepository.save(userAssessment);
     }
+
+    public void deleteUserAssessmentsById(Long id) {
+        userAssessmentRepository.deleteById(id);
+    }
 }

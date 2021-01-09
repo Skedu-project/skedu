@@ -1,6 +1,6 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
-import { Button, Container, Row, Col, Form, FormGroup, Input, Label, Card, Fade, InputGroup } from 'reactstrap';
+import { Button, Container, Row, Col, Form, FormGroup, Input, Label, Card, Fade, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter, ButtonGroup, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { withCookies } from 'react-cookie';
 
 class HomePageHeader extends React.Component {
@@ -11,10 +11,11 @@ class HomePageHeader extends React.Component {
             time: new Date().toLocaleTimeString('en-US'),
             fadeIn: false,
             totalTime: 0,
-            cookie: this.props.cookies,
-            show: "none"
+            popUp: true,
+            userGradeLevel: 0,
+            cookie: this.props.cookies
         };
-        this.switchState = this.switchState.bind(this);
+        this.switchFadeInState = this.switchFadeInState.bind(this);
         this.handleTotalTime = this.handleTotalTime.bind(this);
         this.handleSignOut = this.handleSignOut.bind(this);
     }
@@ -36,15 +37,16 @@ class HomePageHeader extends React.Component {
         });
         const body = await response.json();
         this.setState({totalTime: body.totalTime});
-    }
-    switchState() {
-        var opp = this.state.fadeIn;
-        this.setState({fadeIn: !opp});
-        if (opp) {
-            this.setState({show: "block"});
+        this.setState({userGradeLevel: body.currentGradeLevel});
+        if(this.state.userGradeLevel != 0) {
+            this.setState({popUp: false});
         } else {
-            this.setState({show: "none"});
+            this.setState({popUp: true});
         }
+    }
+    switchFadeInState() {
+        var opp = !this.state.fadeIn;
+        this.setState({fadeIn: opp});
     }
     async handleTotalTime(event) {
         event.preventDefault();
@@ -102,42 +104,45 @@ class HomePageHeader extends React.Component {
                         <h1>My Planner</h1>
                         <Row>
                             <h4 className="col-8 m-0 pr-0">{this.state.date} | MP 2 | {this.state.time}</h4>  {/*marking Period is hard coded*/}
-                            <Button color="info" onClick={this.switchState} className="col-3."><h6>HW Time Today: {this.state.totalTime}</h6></Button>
+                            <Button color="primary" onClick={this.switchFadeInState} className="col-3."><h6>HW Time Today: {this.state.totalTime}</h6></Button>
                         </Row>
                     </Col>
                     <Col className="row p-0" md={2}>
                         <div className="col-3"></div>
-                        <div className="h-100 col-5 p-0" style={{textAlign: "center"}}>
-                            <Button type="submit" className="mt-1" color="secondary" style={{width: "100%", height: "46.48%", borderRadius: "0px", borderTopLeftRadius: "10%"}}><h6>Profile</h6></Button>
-                            <Button type="submit" color="secondary" style={{width: "100%", height: "46.48%", borderRadius: "0px", borderBottomLeftRadius: "10%"}}><h6>Settings</h6></Button>
+                        <div className="h-100 col-5 p-0" style={{textAlign: "center"}} id="profilePopover">
+                        <ButtonGroup>
+                            <ButtonGroup vertical id="profilePopover">
+                                {/* <Button type="submit" className="mt-1" color="secondary" style={{width: "100%", height: "46.48%", borderRadius: "0px", borderTopLeftRadius: "10%"}}><h6>Profile</h6></Button>
+                                <Button type="submit" color="secondary" style={{width: "100%", height: "46.48%", borderRadius: "0px", borderBottomLeftRadius: "10%"}}><h6>Settings</h6></Button> */}
+                                <Button type="button" id="profilePopover" color="secondary" style={{height: "93%", width: "100%"}}><h6>Profile</h6></Button>
+                                {/* <Popover placement="bottom" isOpen={this.state.popUp} target="profilePopover">
+                                    <PopoverHeader>Update Profile</PopoverHeader>
+                                    <PopoverBody>Your profile is not complete.</PopoverBody>
+                                </Popover> */}
+                                <Button type="button" color="dark" style={{height: "93%", width: "100%"}}><h6>Setting</h6></Button>
+                            </ButtonGroup>
+                            <Form onSubmit={this.handleSignOut} className="col-3 p-0" style={{textAlign: "center"}}>
+                                <Button type="submit" color="danger" className="p-1" style={{width: "175%", height: "100%"}}><h6>Sign Out</h6></Button>
+                            </Form>
+                        </ButtonGroup>
                         </div>
-                        <Form onSubmit={this.handleSignOut} className="col-3 p-0" style={{textAlign: "center"}}>
-                            <Button type="submit" color="dark" className="mt-1" style={{width: "110%", height: "93%", borderRadius: "0px", borderBottomRightRadius: "10%", borderTopRightRadius: "10%"}}><h6>Sign Out</h6></Button>
-                        </Form>
                     </Col>
                 </Row>
-                    <Fade in={this.state.fadeIn} className="mt-3" style={{zIndex: "1", position: "absolute"}}>
-                        <div style={fadeInStyle}>
-                            <Form onSubmit={this.handleTotalTime}>
+                    <Modal isOpen={this.state.fadeIn} toggle={this.switchFadeInState}>
+                        <ModalHeader toggle={this.switchFadeInState}>How much time do you want to spend on homework today?</ModalHeader>
+                        <Form onSubmit={this.handleTotalTime}>
+                            <ModalBody>
                                 <FormGroup>
                                     <Label for="totalTime">Homework Time Today</Label>
-                                    <div className="container">
-                                    <Row style={{height: "100px"}}>
-                                        <div className="col-2"></div>
-                                        <Input type="number" name="totalTime" id="totalTime" style={{borderBottomRightRadius: "0px", borderTopRightRadius: "0px"}} className="col-6"/>
-                                        <div className="col-2.">
-                                            <Button color="light" type="submit" style={{borderBottomLeftRadius: "0px", borderTopLeftRadius: "0px"}}>✔</Button>
-                                        </div>
-                                        <div className="col-2"></div>
-                                    </Row>
-                                    </div>
+                                    <Input type="number" name="totalTime" id="totalTime"/>
                                 </FormGroup>
-                            </Form>
-                        </div>
-                    </Fade>
-                </div>
-                <div>
-
+                            </ModalBody>
+                            <ModalFooter>
+                                <Button color="primary" type="submit" onClick={this.switchFadeInState}>Submit</Button>
+                                <Button color="secondary" onClick={this.switchFadeInState}>Cancel</Button>
+                            </ModalFooter>
+                        </Form>
+                    </Modal>
                 </div>
             </Container>
         );

@@ -6,6 +6,7 @@ import com.schedule.skedu.model.UserAssessment;
 import com.schedule.skedu.service.UserAssessmentService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -28,5 +29,10 @@ public class UserAssessmentController {
     public UserAssessment addUserAssessmentByUserId(@PathVariable Long userId, @RequestBody UserAssessment userAssessment) {
         userAssessment.setUserId(userId);
         return userAssessmentService.addUserAssessment(userAssessment);
+    }
+
+    @DeleteMapping("/users/{id}/assessments")
+    public void deleteUserAssessmentsById(@PathVariable Long id) {
+        userAssessmentService.deleteUserAssessmentsById(id);
     }
 }

@@ -13,5 +13,7 @@ public interface SubjectRepository extends JpaRepository<Subject, String> {   //
         value = "SELECT * FROM subjects where id =:subjectId",
         nativeQuery = true
     )
-    Optional<Subject> findSubjectById(@Param("subjectId") String subjectId); 
+    Optional<Subject> findSubjectById(@Param("subjectId") String subjectId);
+
+	Subject findByName(String name); 
 }

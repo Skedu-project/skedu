@@ -20,11 +20,21 @@ public class UserSubject {
     @Column(name = "subject_id")
     private String subjectId;
 
-    private int userGradeLevel;     
+    private int userGradeLevel;
     private double goalGrade;
+
+    private String colorId;
 
     public Long getId() {
         return id;
+    }
+
+    public String getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(String colorId) {
+        this.colorId = colorId;
     }
 
     public String getSubjectId() {

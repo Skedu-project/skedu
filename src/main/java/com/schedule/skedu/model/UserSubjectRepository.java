@@ -1,6 +1,7 @@
 package com.schedule.skedu.model;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
@@ -14,4 +15,5 @@ public interface UserSubjectRepository extends JpaRepository<UserSubject, Long> 
         nativeQuery = true
     )
     List<UserSubject> findSubjectsByUserId(@Param("userId") Long userId);  
+    Optional<UserSubject> findBySubjectIdAndUserId(String subjectId, Long userId);
 }
