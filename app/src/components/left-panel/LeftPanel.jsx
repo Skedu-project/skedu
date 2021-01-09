@@ -10,10 +10,12 @@ class LeftPanel extends React.Component {
         super(props);   
         this.state = {
             allSubjects: [],
-            subjects: []
+            //subjects: [],
+            allColors: []
         };
         this.getAllSubjects = this.getAllSubjects.bind(this);
-        this.getSubjects = this.getSubjects.bind(this); 
+        // this.getSubjects = this.getSubjects.bind(this); 
+        this.getAllColors = this.getAllColors.bind(this);
     }
 
     async getAllSubjects(){
@@ -28,36 +30,36 @@ class LeftPanel extends React.Component {
         this.setState({allSubjects: body});
     }
 
-    async getSubjects() {
-        const response = await fetch('/api/users/1/subjects', { //connecting to api 
-          method: 'GET',
-          headers: {
-              'Accept': 'application/json',  //receiving data in JSON format in browser
-              'Content-Type': 'application/json'  //sending data in JSON format
-          }
-        });
-    
+    async getAllColors(){
+        const response = await fetch('/api/subjectColors', {
+            method: 'GET', 
+            headers: {
+                'Accept': 'application/json',  //receiving data in JSON format in browser
+                'Content-Type': 'application/json'  //sending data in JSON format
+            }
+        }); 
         const body = await response.json();
-        this.setState({subjects: body}); //subjects has users subjects
-      }
+        this.setState({allColors: body});
+    } 
 
     async componentWillMount(){
         this.getAllSubjects();
-        this.getSubjects();
+        this.getAllColors(); 
     }
 
     render() {
+        const userSubjects = this.props.subjects;
         return (
             <Card style={{height: "100%"}}>
                 <CardHeader>
                     <h3 style={{textAlign: "center"}}>My Subjects</h3>
                 </CardHeader>
                 <CardBody style={{overflowY: 'scroll'}}>
-                    <SubjectList subjects={this.state.subjects} />
+                    <SubjectList subjects={userSubjects}/>
                 </CardBody>
                 <CardFooter>
                     <div style={{textAlign: "center"}}>
-                        <AddSubject allSubjects={this.state.allSubjects} currentGradeLevel={9} onSave={this.getSubjects}/> 
+                        <AddSubject allSubjects={this.state.allSubjects} currentGradeLevel={9} allColors={this.state.allColors} onSave={this.props.refresh}/> 
                     </div>  
                 </CardFooter>
             </Card>

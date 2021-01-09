@@ -44,14 +44,7 @@ class HomePageAssessments extends React.Component {
     }
 
     async componentDidMount() {
-        const response = await fetch('/api/users/' + this.state.cookie.get('id') + '/subjects', {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',  //receiving data in JSON format in browser
-                'Content-Type': 'application/json'  //sending data in JSON format
-            }
-        });
-        const body = await response.json();
+        const body = this.props.subjects; 
         var i;
         var subjectArray = [];
         for(i=0; i < body.length; i++) {
@@ -76,6 +69,20 @@ class HomePageAssessments extends React.Component {
         }
         this.setState({assessmentTypes: assessmentTypesArray});
         this.fetchAssessmentData();
+    }
+
+    componentDidUpdate(prevProps) {
+        if (prevProps.subjects !== this.props.subjects) {
+            const body = this.props.subjects; 
+            var i;
+            var subjectArray = [];
+            for(i=0; i < body.length; i++) {
+                subjectArray.push(body[i].subject);
+            }
+            this.setState({subjects: subjectArray});
+            this.setState({userSubjects: body})
+            console.log(this.state.userSubjects);
+        }
     }
 
     async handleAssessment(event) {

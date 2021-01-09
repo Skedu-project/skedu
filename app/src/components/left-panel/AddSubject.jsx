@@ -60,20 +60,20 @@ class AddSubject extends React.Component {
                     <Label for="subjectId">Subject</Label>
                     <Input type="select" id="subjectId" name="subjectId" required>
                       <option value="" disabled selected>Select Subject</option>
-                      {this.props.allSubjects && this.props.allSubjects.map(subject => (<option value={subject.id}>{subject.name}</option> ))} 
+                      {this.props.allSubjects && this.props.allSubjects.map(subject => (<option value={subject.id}>{subject.name}- {subject.gradeLevel}</option> ))} 
                     </Input>
                   </FormGroup>
                   <FormGroup>
                     <Label for="goalGrade">Goal Grade</Label>
-                    <Input type="text" id="goalGrade" name="goalGrade" placeholder="Enter Your Goal Grade" required></Input>
+                    <Input type="number" id="goalGrade" name="goalGrade" placeholder="Enter Your Goal Grade" required></Input>
                   </FormGroup>
-                  {/* <FormGroup>
+                  <FormGroup>
                     <Label for="colorId">Color</Label>
                     <Input type="select" id="colorId" name="colorId">
-                      <option value="1">Gray</option> 
-                      <option value="2">Red</option>
+                      <option value="" disabled selected>Select Color</option>
+                      {this.props.allColors && this.props.allColors.map(color => (<option value={color.id}>{color.displayName}</option> ))} 
                     </Input>
-                  </FormGroup> */}
+                  </FormGroup>
               </ModalBody>
               <ModalFooter>
                 <Button color='primary' type="submit">Save</Button>{' '}

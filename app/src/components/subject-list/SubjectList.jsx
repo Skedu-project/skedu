@@ -12,7 +12,7 @@ class SubjectList extends React.Component {
     return (
       <Container>{
         (subjects && subjects.length > 0) && (subjects.map(subjectItem => (
-          <Subject color="red" name={subjectItem.subject.name} goalGrade={subjectItem.goalGrade} />
+          <Subject color={subjectItem.colorId} name={subjectItem.subject.name} goalGrade={subjectItem.goalGrade} />
         )))
       }
     </Container>
