@@ -17,7 +17,7 @@ class HomePageHeader extends React.Component {
         };
         this.switchFadeInState = this.switchFadeInState.bind(this);
         this.handleTotalTime = this.handleTotalTime.bind(this);
-        this.handleSignOut = this.handleSignOut.bind(this);
+        this.handleSignOut = this.handleSignOut.bind(this); 
     }
     changeDate() {
         this.setState({date: new Date().toDateString()});
@@ -25,7 +25,7 @@ class HomePageHeader extends React.Component {
     changeTime() {
         this.setState({time: new Date().toLocaleTimeString('en-US')});
     }
-    async componentDidMount() {
+    async componentWillMount() {
         setInterval(this.changeDate.bind(this), 60000);
         setInterval(this.changeTime.bind(this), 1000);
         const response = await fetch('/api/usersByEmail?email=' + this.state.cookie.get('email') + '&totalTime=', {
@@ -41,13 +41,15 @@ class HomePageHeader extends React.Component {
         if(this.state.userGradeLevel != 0) {
             this.setState({popUp: false});
         } else {
-            this.setState({popUp: true});
+            this.setState({popUp: true}); 
         }
     }
+       
     switchFadeInState() {
         var opp = !this.state.fadeIn;
         this.setState({fadeIn: opp});
     }
+
     async handleTotalTime(event) {
         event.preventDefault();
         const data = new FormData(event.target);
@@ -81,6 +83,8 @@ class HomePageHeader extends React.Component {
             alert("There is something wrong with the Sign out.")
         }
     }
+
+    
     render() {
         const headerStyle = {
             backgroundColor: "#B8B8B8",

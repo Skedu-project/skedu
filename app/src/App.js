@@ -6,6 +6,8 @@ import HomePage from './components/HomePage';
 import MainPage from './components/MainPage';
 import './App.css';
 
+import LeftPanel from './components/left-panel/LeftPanel'; 
+
 class App extends React.Component {
   render() {
     return(
@@ -15,6 +17,7 @@ class App extends React.Component {
             <Route path='/' exact={true} component={MainPage} />
             <Route path='/login' exact={true} component={LoginPage} />
             <Route path='/home' exact={true} component={HomePage} />
+            <Route path='/left' exact={true} component={LeftPanel} />
           </Switch>
         </Router>
       </CookiesProvider>
