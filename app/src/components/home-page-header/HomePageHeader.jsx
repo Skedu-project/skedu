@@ -20,7 +20,7 @@ class HomePageHeader extends React.Component {
         this.handleSignOut = this.handleSignOut.bind(this); 
     }
     changeDate() {
-        this.setState({date: new Date().toDateString()});
+        this.setState({date: new Date().toDateString('en-US')});
     }
     changeTime() {
         this.setState({time: new Date().toLocaleTimeString('en-US')});
@@ -108,7 +108,7 @@ class HomePageHeader extends React.Component {
                         <h1>My Planner</h1>
                         <Row>
                             <h4 className="col-8 m-0 pr-0">{this.state.date} | MP 2 | {this.state.time}</h4>  {/*marking Period is hard coded*/}
-                            <Button color="primary" onClick={this.switchFadeInState} className="col-3."><h6>HW Time Today: {this.state.totalTime}</h6></Button>
+                            <Button color="primary" onClick={this.switchFadeInState} className="col-3."><h6>Study Time Today: {this.state.totalTime}</h6></Button>
                         </Row>
                     </Col>
                     <Col className="row p-0" md={2}>
@@ -133,7 +133,7 @@ class HomePageHeader extends React.Component {
                     </Col>
                 </Row>
                     <Modal isOpen={this.state.fadeIn} toggle={this.switchFadeInState}>
-                        <ModalHeader toggle={this.switchFadeInState}>How much time do you want to spend on homework today?</ModalHeader>
+                        <ModalHeader toggle={this.switchFadeInState}>How much time do you want to study today?</ModalHeader>
                         <Form onSubmit={this.handleTotalTime}>
                             <ModalBody>
                                 <FormGroup>
