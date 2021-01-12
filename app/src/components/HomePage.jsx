@@ -38,25 +38,25 @@ class HomePage extends React.Component {
             return null;
         }
         const smallerContainer = {
-            height: "83vh",
+            height: "86vh",
            /* width: (window.innerWidth-30),*/
             position: "relative"
         };
         const largeContainer = {
-            height: (window.innerHeight-8),
-            width: (window.innerWidth-12),
+            height: "99vh",
+            width: "99vw",
             position: "relative",
         };
         return(
             <Container fluid className="m-0" style={largeContainer}>
                 <Row style={largeContainer}>
-                    <Col id="subject nav bar" className="p-1 border-right" md={2} style={{backgroundColor: "whiteSmoke"}}>
+                    <Col id="subject nav bar" className="p-1" md={2} /*style={{backgroundColor: "whiteSmoke"}}*/>
                         <LeftPanel subjects={this.state.subjects} refresh={this.getSubjects}/>
                     </Col>
                     <Col id="right" className="p-1">
-                        <Container fluid style={smallerContainer} className="m-0 p-0">
-                            <Row><Col id="header"><HomePageHeader /></Col></Row>
-                            <Row className="m-0" id="bot_right" style={smallerContainer}>
+                        <Container fluid style={{position: "relative", height: "100%"}} className="m-0 p-0">
+                            <Row style={{height: "12%", position: "relative"}}><Col id="header"><HomePageHeader /></Col></Row>
+                            <Row fluid className="m-0" id="bot_right" style={{height: "88%", position: "relative"}}>
                                 <Col id="HW time" md={8}> HW time </Col>
                                 <Col className="p-0"><HomePageAssessments subjects={this.state.subjects}/></Col>
                             </Row>

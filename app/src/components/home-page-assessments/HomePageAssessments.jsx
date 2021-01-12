@@ -130,8 +130,8 @@ class HomePageAssessments extends React.Component {
 
     render() {
         return(
-            <div>
-            <Card style={{height: "86vh"}}>
+            <div style={{height: "100%"}}>
+            <Card style={{height: "100%"}}>
                 <CardHeader style={{textAlign: "center", padding: "10px", backgroundColor: "lightGray"}}><h2>Assessments</h2></CardHeader>
                 <CardBody style={{overflowY: "scroll", backgroundColor: "whiteSmoke"}}>
                     <Container fluid>

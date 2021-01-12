@@ -1,5 +1,5 @@
 import React from 'react';
-import { Row, Col } from 'reactstrap'; 
+import { Row, Col, Container } from 'reactstrap'; 
 
 class Subject extends React.Component {
   constructor(props) {
@@ -8,15 +8,15 @@ class Subject extends React.Component {
 
   render() {
     return (
-      <div style={{paddingBottom: "10px"}}>
-        <Row style={{border: '1px solid', borderRadius: '12px'}}>
-            <Col xs="0" className={this.props.color} style={{ width:'20px', borderTopLeftRadius: '12px', borderBottomLeftRadius: '12px'}} />
+      <Container style={{marginBottom: "10px", backgroundColor: "whiteSmoke"}}>
+        <Row style={{border: '1px solid', borderRadius: '7px', height: "8vh"}}>
+            <Col xs="1" className={this.props.color} style={{ /*width:'20px',*/ borderTopLeftRadius: '7px', borderBottomLeftRadius: '7px'}} />
             <Col xs="9" style={{textAlign: 'center'}}>
-                <div>{this.props.name}</div>
-                <div>{this.props.goalGrade}%</div>
+                <h5>{this.props.name}</h5>
+                <div style={{borderRadius: "2px", backgroundColor: "lightGray"}}><h6 style={{}}>{this.props.goalGrade}%</h6></div>
             </Col>
         </Row>
-      </div>
+      </Container>
     )
   }
 }

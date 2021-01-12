@@ -88,7 +88,7 @@ class HomePageHeader extends React.Component {
     render() {
         const headerStyle = {
             backgroundColor: "#B8B8B8",
-            padding: "5px"
+            padding: "0%"
             /*width: "1000px"*/
         }
         const fadeInStyle = {
@@ -108,7 +108,7 @@ class HomePageHeader extends React.Component {
                         <h1>My Planner</h1>
                         <Row>
                             <h4 className="col-8 m-0 pr-0">{this.state.date} | MP 2 | {this.state.time}</h4>  {/*marking Period is hard coded*/}
-                            <Button color="primary" onClick={this.switchFadeInState} className="col-3."><h6>Study Time Today: {this.state.totalTime}</h6></Button>
+                            <Button color="primary" onClick={this.switchFadeInState} className="col-3. m-0"><h6>Study Time Today: {this.state.totalTime}</h6></Button>
                         </Row>
                     </Col>
                     <Col className="row p-0" md={2}>
