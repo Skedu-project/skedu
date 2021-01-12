@@ -1,7 +1,7 @@
 import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { withCookies } from 'react-cookie';
-import { Container, Row, Button, Card, CardBody, CardFooter, CardHeader, Modal, ModalBody, ModalHeader, ModalFooter, Form, FormGroup, Label, Input } from 'reactstrap';
+import { Container, Row, Button, Card, CardBody, CardFooter, CardHeader, Modal, ModalBody, ModalHeader, ModalFooter, Form, FormGroup, Label, Input, Collapse } from 'reactstrap';
 import AssessmentBlock from '../assessment-block/AssessmentBlock';
 
 class HomePageAssessments extends React.Component {
@@ -9,19 +9,27 @@ class HomePageAssessments extends React.Component {
         super(props);
         this.state = {
             assessmentToggle: false,
+            completeAssessments: false,
             cookie: this.props.cookies,
             subjects: [],
             assessmentTypes: [],
             assessmentObjectArray: [],
+            completeAssessmentObjectArray: [],
             userSubjects: []
         }
         this.toggleAssessment = this.toggleAssessment.bind(this);
         this.handleAssessment = this.handleAssessment.bind(this);
         this.fetchAssessmentData = this.fetchAssessmentData.bind(this);
+        this.toggleCompleteAssessments = this.toggleCompleteAssessments.bind(this);
     }
     toggleAssessment() {
         var opp = !this.state.assessmentToggle;
         this.setState({assessmentToggle: opp});
+    }
+
+    toggleCompleteAssessments() {
+        var opp = !this.state.completeAssessments;
+        this.setState({completeAssessments: opp});
     }
 
     async fetchAssessmentData() {
@@ -33,14 +41,18 @@ class HomePageAssessments extends React.Component {
             }
         });
         const bodyAssessments = await responseGetAssessments.json();
-        console.log("body: " + bodyAssessments);
         const assessmentsArray = [];
+        const completeAssessmentsArray = [];
         var k;
         for(k=0; k<bodyAssessments.length; k++) {
-            assessmentsArray.push(bodyAssessments[k]);
+            if(!bodyAssessments[k].isComplete) {
+                assessmentsArray.push(bodyAssessments[k]);
+            } else {
+                completeAssessmentsArray.push(bodyAssessments[k]);
+            }
         }
-        console.log(assessmentsArray);
         this.setState({assessmentObjectArray: assessmentsArray});
+        this.setState({completeAssessmentObjectArray: completeAssessmentsArray});
     }
 
     async componentDidMount() {
@@ -52,7 +64,6 @@ class HomePageAssessments extends React.Component {
         }
         this.setState({subjects: subjectArray});
         this.setState({userSubjects: body})
-        console.log(this.state.userSubjects);
 
         const response2 = await fetch('/api/assessments', {
             method: 'GET',
@@ -88,24 +99,22 @@ class HomePageAssessments extends React.Component {
     async handleAssessment(event) {
         event.preventDefault();
         const data = new FormData(event.target);
-        //console.log('/api/users/' + this.state.cookie.get('id') + '/subject?subjectName=' + data.get('userSubjects'));
-        const response = await fetch('/api/users/' + this.state.cookie.get('id') + '/subjectName?subjectName=' + data.get('userSubjects'), {
-            method: 'GET',
-            headers: {
-                'Accept': 'application/json',  //receiving data in JSON format in browser
-                'Content-Type': 'application/json'  //sending data in JSON format
+        var subjectId;
+        var l;
+        for(l=0;l<this.state.userSubjects.length;l++) {
+            if(this.state.userSubjects[l].subject.name == data.get('userSubjects')) {
+                console.log("in");
+                subjectId = this.state.userSubjects[l].id;
             }
-        });
-        const body = await response.json();
-        const subjectId = body.id;
-        //console.log(body);
+        }
         const data2 = {
             assessmentTypeName: data.get('assessmentTypeName'),
             date: data.get('date'),
             priority: data.get('priority'),
             totalPointsAvailable: data.get('totalPointsAvailable'),
             userSubjectId: subjectId,
-            userId: this.state.cookie.get('id')
+            userId: this.state.cookie.get('id'),
+            isComplete: false
         }
         const response2 = await fetch('/api/users/' + this.state.cookie.get('id') + '/assessments', {
             method: 'POST',
@@ -116,23 +125,35 @@ class HomePageAssessments extends React.Component {
             body: JSON.stringify(data2)
         });
         const body2 = await response2.json();
-        console.log(body2);
         this.fetchAssessmentData();
     }
 
     render() {
         return(
-            <div>
-            <Card style={{height: "86vh"}}>
+            <div style={{height: "100%"}}>
+            <Card style={{height: "100%"}}>
                 <CardHeader style={{textAlign: "center", padding: "10px", backgroundColor: "lightGray"}}><h2>Assessments</h2></CardHeader>
-                <CardBody style={{overflowY: "scroll"}}>
+                <CardBody style={{overflowY: "scroll", backgroundColor: "whiteSmoke"}}>
                     <Container fluid>
                         {this.state.assessmentObjectArray.map(assessment => (<Row className="pb-2"><AssessmentBlock 
                             color={this.state.userSubjects.find(element => element.id == assessment.userSubjectId).colorId} 
                             subject={`${this.state.userSubjects.find(element => element.id == assessment.userSubjectId).subject.name} ${assessment.assessmentTypeName}`} 
-                            date={`${new Date(assessment.date).getMonth()+1}/${new Date(assessment.date).getDate()+1}`} 
+                            date={`${new Date(assessment.date).getMonth()+1}/${new Date(assessment.date).getDate()+1}`}
+                            dateFormat={new Date(assessment.date).toDateString('en-US')}
+                            complete={false} 
                             id={assessment.id} 
                             onUpdate={this.fetchAssessmentData} /></Row>))}
+                        <Button onClick={this.toggleCompleteAssessments} color="dark" className="text-white mb-2 pt-0 pb-0 pl-1 pr-1" style={{opacity: "0.3"}}>Completed</Button>
+                        <Collapse isOpen={this.state.completeAssessments}>
+                        {this.state.completeAssessmentObjectArray.map(completedAssessment => (<Row className="pb-2"><AssessmentBlock 
+                            color={this.state.userSubjects.find(element => element.id == completedAssessment.userSubjectId).colorId} 
+                            subject={`${this.state.userSubjects.find(element => element.id == completedAssessment.userSubjectId).subject.name} ${completedAssessment.assessmentTypeName}`} 
+                            date={`${new Date(completedAssessment.date).getMonth()+1}/${new Date(completedAssessment.date).getDate()+1}`}
+                            dateFormat={new Date(completedAssessment.date).toDateString('en-US')}
+                            complete={true} 
+                            id={completedAssessment.id} 
+                            onUpdate={this.fetchAssessmentData} /></Row>))}
+                        </Collapse>
                     </Container>
                 </CardBody>
                 <CardFooter style={{backgroundColor: "lightGray"}}>

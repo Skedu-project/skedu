@@ -1,5 +1,6 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; 
+import { withCookies } from 'react-cookie';
 
 class AddSubject extends React.Component {
 
@@ -35,7 +36,7 @@ class AddSubject extends React.Component {
     }
 
     async saveSubject(formJSON){
-      await fetch('/api/users/1/subjects', { //connecting to api 
+      await fetch('/api/users/' + this.props.cookies.get('id') + '/subjects', { //connecting to api 
         method: 'POST',
         headers: {
             'Accept': 'application/json',  //receiving data in JSON format in browser
@@ -86,4 +87,4 @@ class AddSubject extends React.Component {
     }
 }
 
-export default AddSubject; 
+export default withCookies(AddSubject); 

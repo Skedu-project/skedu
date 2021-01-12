@@ -20,9 +20,18 @@ public class UserAssessment {
     private String assessmentTypeName;
     private double totalPointsAvailable;
     private double priority;
+    private boolean isComplete;
 
     public Long getId() {
         return id;
+    }
+
+    public boolean getIsComplete() {
+        return isComplete;
+    }
+
+    public void setIsComplete(boolean isComplete) {
+        this.isComplete = isComplete;
     }
 
     public Long getUserSubjectId() {
