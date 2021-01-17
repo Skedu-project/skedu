@@ -1,5 +1,7 @@
 package com.schedule.skedu.model;
 
+import java.util.Date;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,9 +24,27 @@ public class User {
     private String password;
     private boolean isSignedIn;
     private int totalTime;
+    private int markingPeriodName;
+    private Date markingPeriodEndDate;
 
     public String getFirstName() {
         return firstName;
+    }
+
+    public Date getMarkingPeriodEndDate() {
+        return markingPeriodEndDate;
+    }
+
+    public void setMarkingPeriodEndDate(Date markingPeriodEndDate) {
+        this.markingPeriodEndDate = markingPeriodEndDate;
+    }
+
+    public int getMarkingPeriodName() {
+        return markingPeriodName;
+    }
+
+    public void setMarkingPeriodName(int markingPeriodName) {
+        this.markingPeriodName = markingPeriodName;
     }
 
     public int getTotalTime() {

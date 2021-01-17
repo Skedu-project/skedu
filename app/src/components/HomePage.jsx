@@ -4,6 +4,7 @@ import { Container, Col, Row } from 'reactstrap';
 import HomePageHeader from './home-page-header/HomePageHeader';
 import HomePageAssessments from './home-page-assessments/HomePageAssessments';
 import LeftPanel from './left-panel/LeftPanel'; 
+import TimeBlock from './time-block/TimeBlock'
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -57,7 +58,11 @@ class HomePage extends React.Component {
                         <Container fluid style={{position: "relative", height: "100%"}} className="m-0 p-0">
                             <Row style={{height: "12%", position: "relative"}}><Col id="header"><HomePageHeader /></Col></Row>
                             <Row fluid className="m-0" id="bot_right" style={{height: "88%", position: "relative"}}>
-                                <Col id="HW time" md={8}> HW time </Col>
+                                <Col id="HW time" md={8}>
+                                    <Container>
+                                        <TimeBlock />
+                                    </Container>
+                                </Col>
                                 <Col className="p-0"><HomePageAssessments subjects={this.state.subjects}/></Col>
                             </Row>
                         </Container>
