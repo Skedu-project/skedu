@@ -47,6 +47,8 @@ public class UserSubjectService {
         userSubjectDetail.setUserGradeLevel(userSubject.getUserGradeLevel());
         userSubjectDetail.setGoalGrade(userSubject.getGoalGrade());
         userSubjectDetail.setColorId(userSubject.getColorId());
+        userSubjectDetail.setCurrentPoints(userSubject.getCurrentPoints());
+        userSubjectDetail.setTotalPoints(userSubject.getTotalPoints());
         return userSubjectDetail;
     }
 

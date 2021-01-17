@@ -22,11 +22,28 @@ public class UserSubject {
 
     private int userGradeLevel;
     private double goalGrade;
-
     private String colorId;
+    private Long totalPoints;
+    private Long currentPoints;
 
     public Long getId() {
         return id;
+    }
+
+    public Long getCurrentPoints() {
+        return currentPoints;
+    }
+
+    public void setCurrentPoints(Long currentPoints) {
+        this.currentPoints = currentPoints;
+    }
+
+    public Long getTotalPoints() {
+        return totalPoints;
+    }
+
+    public void setTotalPoints(Long totalPoints) {
+        this.totalPoints = totalPoints;
     }
 
     public String getColorId() {
