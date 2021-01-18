@@ -4,7 +4,7 @@ import { Container, Col, Row } from 'reactstrap';
 import HomePageHeader from './home-page-header/HomePageHeader';
 import HomePageAssessments from './home-page-assessments/HomePageAssessments';
 import LeftPanel from './left-panel/LeftPanel'; 
-import TimeBlock from './time-block/TimeBlock'
+import TimeBlockList from './TimeBlockList';
 
 class HomePage extends React.Component {
     constructor(props) {
@@ -38,37 +38,36 @@ class HomePage extends React.Component {
             this.props.history.push('/');
             return null;
         }
-        const smallerContainer = {
-            height: "86vh",
-           /* width: (window.innerWidth-30),*/
-            position: "relative"
-        };
         const largeContainer = {
-            height: "99vh",
-            width: "99vw",
-            position: "relative",
+            height: "100vh",
+            width: "100vw",
+            paddingLeft: "15px",
+            paddingRight: "0px",
+            position: "fixed"
         };
         return(
-            <Container fluid className="m-0" style={largeContainer}>
-                <Row style={largeContainer}>
-                    <Col id="subject nav bar" className="p-1" md={2} /*style={{backgroundColor: "whiteSmoke"}}*/>
-                        <LeftPanel subjects={this.state.subjects} refresh={this.getSubjects}/>
-                    </Col>
-                    <Col id="right" className="p-1">
-                        <Container fluid style={{position: "relative", height: "100%"}} className="m-0 p-0">
-                            <Row style={{height: "12%", position: "relative"}}><Col id="header"><HomePageHeader /></Col></Row>
-                            <Row fluid className="m-0" id="bot_right" style={{height: "88%", position: "relative"}}>
-                                <Col id="HW time" md={8}>
-                                    <Container>
-                                        <TimeBlock />
-                                    </Container>
-                                </Col>
-                                <Col className="p-0"><HomePageAssessments subjects={this.state.subjects}/></Col>
-                            </Row>
-                        </Container>
-                    </Col>
-                </Row>
-            </Container>
+            <div style={largeContainer}>
+            <Row style={{height:"100%", padding: "10px", backgroundColor: "white"}}>
+                <Col id="subject nav bar" xs={2} className="p-0"/*style={{backgroundColor: "whiteSmoke"}}*/>
+                    <LeftPanel style={{height: "100%"}} subjects={this.state.subjects} refresh={this.getSubjects}/>
+                </Col>
+                <Col xs={10} id="right">
+                    <Row style={{}}>
+                        <Col id="header"><HomePageHeader /></Col>
+                    </Row>
+                    <Row id="bot_right" style={{height: "88%", padding: "10px"}}>
+                        <Col id="HW time" xs={8} style={{height: "100%"}}>
+                            <Container>
+                                <TimeBlockList />
+                            </Container>
+                        </Col>
+                        <Col xs={4} style={{height: "100%"}}>
+                            <HomePageAssessments subjects={this.state.subjects}/>
+                        </Col>
+                        </Row>
+                </Col>
+            </Row>
+            </div>
         );
     }
 }

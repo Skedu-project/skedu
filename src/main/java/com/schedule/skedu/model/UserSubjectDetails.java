@@ -10,26 +10,26 @@ public class UserSubjectDetails {
     private int userGradeLevel;
     private double goalGrade;
     private String colorId;
-    private Long totalPoints;
-    private Long currentPoints;
+    private double totalPoints;
+    private double currentPoints;
 
     public Long getId() {
         return id;
     }
 
-    public Long getCurrentPoints() {
+    public double getCurrentPoints() {
         return currentPoints;
     }
 
-    public void setCurrentPoints(Long currentPoints) {
+    public void setCurrentPoints(double currentPoints) {
         this.currentPoints = currentPoints;
     }
 
-    public Long getTotalPoints() {
+    public double getTotalPoints() {
         return totalPoints;
     }
 
-    public void setTotalPoints(Long totalPoints) {
+    public void setTotalPoints(double totalPoints) {
         this.totalPoints = totalPoints;
     }
 

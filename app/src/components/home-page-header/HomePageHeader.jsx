@@ -88,7 +88,7 @@ class HomePageHeader extends React.Component {
     render() {
         const headerStyle = {
             backgroundColor: "#B8B8B8",
-            padding: "0%"
+            height: "100%"
             /*width: "1000px"*/
         }
         const fadeInStyle = {
@@ -101,54 +101,46 @@ class HomePageHeader extends React.Component {
             textAlign: "center",
         }
         return(
-            <Container fluid className="m-0 p-0">
-                <div className="container-fluid m-2">
+            <div className="ml-3 mr-3">
                 <Row style={headerStyle} className="rounded-lg">
-                    <Col className="container m-0" md={10} /*style={{width: "650px"}}*/>
-                        <h1>My Planner</h1>
-                        <Row>
-                            <h4 className="col-8 m-0 pr-0">{this.state.date} | MP 2 | {this.state.time}</h4>  {/*marking Period is hard coded*/}
-                            <Button color="primary" onClick={this.switchFadeInState} className="col-3. m-0"><h6>Study Time Today: {this.state.totalTime}</h6></Button>
-                        </Row>
-                    </Col>
-                    <Col className="row p-0" md={2}>
-                        <div className="col-3"></div>
-                        <div className="h-100 col-5 p-0" style={{textAlign: "center"}} id="profilePopover">
-                        <ButtonGroup>
-                            <ButtonGroup vertical id="profilePopover">
-                                {/* <Button type="submit" className="mt-1" color="secondary" style={{width: "100%", height: "46.48%", borderRadius: "0px", borderTopLeftRadius: "10%"}}><h6>Profile</h6></Button>
-                                <Button type="submit" color="secondary" style={{width: "100%", height: "46.48%", borderRadius: "0px", borderBottomLeftRadius: "10%"}}><h6>Settings</h6></Button> */}
-                                <Button type="button" id="profilePopover" color="secondary" style={{height: "93%", width: "100%"}}><h6>Profile</h6></Button>
-                                {/* <Popover placement="bottom" isOpen={this.state.popUp} target="profilePopover">
-                                    <PopoverHeader>Update Profile</PopoverHeader>
-                                    <PopoverBody>Your profile is not complete.</PopoverBody>
-                                </Popover> */}
-                                <Button type="button" color="dark" style={{height: "93%", width: "100%"}}><h6>Setting</h6></Button>
+                        <Col xs={10}>
+                            <Row><h1 className="ml-3">My Planner</h1></Row>
+                            <Row>
+                                <Col xs={7}><h4>{this.state.date} | MP 2 | {this.state.time}</h4></Col>
+                                <Col xs={5}><Button color="primary" onClick={this.switchFadeInState}><h6>Study Time Today: {this.state.totalTime}</h6></Button></Col>
+                            </Row>
+                        </Col>
+                        <Col xs={2}>
+                            <div className="col-3"></div>
+                            <div className="h-100 col-5 p-0" style={{textAlign: "center"}} id="profilePopover">
+                            <ButtonGroup>
+                                <ButtonGroup vertical id="profilePopover">
+                                    <Button type="button" id="profilePopover" color="secondary" style={{height: "93%", width: "100%"}}><h6>Profile</h6></Button>
+                                    <Button type="button" color="dark" style={{height: "93%", width: "100%"}}><h6>Setting</h6></Button>
+                                </ButtonGroup>
+                                <Form onSubmit={this.handleSignOut} className="col-3 p-0" style={{textAlign: "center"}}>
+                                    <Button type="submit" color="danger" className="p-1" style={{width: "175%", height: "100%"}}><h6>Sign Out</h6></Button>
+                                </Form>
                             </ButtonGroup>
-                            <Form onSubmit={this.handleSignOut} className="col-3 p-0" style={{textAlign: "center"}}>
-                                <Button type="submit" color="danger" className="p-1" style={{width: "175%", height: "100%"}}><h6>Sign Out</h6></Button>
+                            </div>
+                        </Col>
+                    </Row>
+                        <Modal isOpen={this.state.fadeIn} toggle={this.switchFadeInState}>
+                            <ModalHeader toggle={this.switchFadeInState}>How much time do you want to study today?</ModalHeader>
+                            <Form onSubmit={this.handleTotalTime}>
+                                <ModalBody>
+                                    <FormGroup>
+                                        <Label for="totalTime">Study Time Today</Label>
+                                        <Input type="number" name="totalTime" id="totalTime"/>
+                                    </FormGroup>
+                                </ModalBody>
+                                <ModalFooter>
+                                    <Button color="primary" type="submit" onClick={this.switchFadeInState}>Submit</Button>
+                                    <Button color="secondary" onClick={this.switchFadeInState}>Cancel</Button>
+                                </ModalFooter>
                             </Form>
-                        </ButtonGroup>
-                        </div>
-                    </Col>
-                </Row>
-                    <Modal isOpen={this.state.fadeIn} toggle={this.switchFadeInState}>
-                        <ModalHeader toggle={this.switchFadeInState}>How much time do you want to study today?</ModalHeader>
-                        <Form onSubmit={this.handleTotalTime}>
-                            <ModalBody>
-                                <FormGroup>
-                                    <Label for="totalTime">Homework Time Today</Label>
-                                    <Input type="number" name="totalTime" id="totalTime"/>
-                                </FormGroup>
-                            </ModalBody>
-                            <ModalFooter>
-                                <Button color="primary" type="submit" onClick={this.switchFadeInState}>Submit</Button>
-                                <Button color="secondary" onClick={this.switchFadeInState}>Cancel</Button>
-                            </ModalFooter>
-                        </Form>
-                    </Modal>
-                </div>
-            </Container>
+                        </Modal>
+            </div>
         );
     }
 }

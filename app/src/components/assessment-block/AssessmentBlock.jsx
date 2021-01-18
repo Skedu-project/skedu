@@ -20,7 +20,7 @@ class AssessmentBlock extends React.Component {
     }
 
     updateColor() {
-        if(this.props.color == "bg-warning") {
+        if(this.props.color == "bg-warning" || this.props.color == "bg-light") {
             this.setState({textColor: "dark"});
         } else {
             this.setState({textColor: "white"});
@@ -54,11 +54,17 @@ class AssessmentBlock extends React.Component {
 
     render() {
         return(
-            <Container fluid className="m-0 p-0 rounded border border-dark border-2" style={{height: "5vh", display: "inline-block", backgroundColor: "white"}}>
+            <Container fluid className="m-0 rounded border border-dark border-2">
                 <Row style={{height: "100%"}}>
-                    <Col md={2} className="p-0" style={{/*backgroundColor: "lightgray", */textAlign: "center", top: "1.5vh"}}><Input type="radio" onClick={this.deleteAssessment} style={{margin: "0%", transform: "scale(2)"}} className={style('checkButton')}/></Col>
-                    <Col md={8} className={this.props.color+" m-0 text-" + this.state.textColor} style={{/*padding: "2.1%",height: "100%",*/ textAlign: "center"}}><h5 className="p-0 m-0" style={{transform: "translateY(45%)"}}>{this.props.subject}</h5></Col>
-                    <Col md={2.1} style={{textAlign: "center", position: "relative", top: "1.2vh", left: "1.2vh"/*paddingTop: "2%", paddingBottom: "1.9%" height: "100%"*/}} className="ml-2"><h6>{this.props.date}</h6></Col>
+                    <Col xs={1} className={"p-0 " + this.props.color} style={{textAlign: "center"}}>
+                        <Input type="radio" onClick={this.deleteAssessment} style={{margin: "0%", transform: "scale(2)", verticalAlign: 'middle', height: '100%', zIndex: "2"}} className={style('checkButton')}/>
+                    </Col>
+                    <Col xs={9} className={this.props.color+" m-0 text-" + this.state.textColor} style={{textAlign: "center", height: "100%"}}>
+                        <h5 className="p-2 m-0" style={{}}>{this.props.subject}</h5>
+                    </Col>
+                    <Col xs={2} style={{textAlign: "center"}} className="m-0 p-2">
+                        <h6 className="p-0 m-0">{this.props.date}</h6>
+                    </Col>
                 </Row>
             </Container>
         );

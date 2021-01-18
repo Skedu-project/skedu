@@ -32,6 +32,20 @@ class HomePageAssessments extends React.Component {
         this.setState({completeAssessments: opp});
     }
 
+    compare(a, b) {
+        // Use toUpperCase() to ignore character casing
+        const dateA = Date.parse(a.date);
+        const dateB = Date.parse(b.date);
+      
+        let comparison = 0;
+        if (dateA > dateB) {
+          comparison = 1;
+        } else if (dateA < dateB) {
+          comparison = -1;
+        }
+        return comparison;
+    }
+
     async fetchAssessmentData() {
         const responseGetAssessments = await fetch('/api/users/' + this.state.cookie.get('id') + '/assessments', {
             method: 'GET',
@@ -51,6 +65,7 @@ class HomePageAssessments extends React.Component {
                 completeAssessmentsArray.push(bodyAssessments[k]);
             }
         }
+        assessmentsArray.sort(this.compare);
         this.setState({assessmentObjectArray: assessmentsArray});
         this.setState({completeAssessmentObjectArray: completeAssessmentsArray});
     }
@@ -130,11 +145,11 @@ class HomePageAssessments extends React.Component {
 
     render() {
         return(
-            <div style={{height: "100%"}}>
+            <div style={{height: "100%"}} >
             <Card style={{height: "100%"}}>
                 <CardHeader style={{textAlign: "center", padding: "10px", backgroundColor: "lightGray"}}><h2>Assessments</h2></CardHeader>
-                <CardBody style={{overflowY: "scroll", backgroundColor: "whiteSmoke"}}>
-                    <Container fluid>
+                <CardBody style={{overflowY: "scroll", backgroundColor: "whiteSmoke", height: "100%"}}>
+                    <Container>
                         {this.state.assessmentObjectArray.map(assessment => (<Row className="pb-2"><AssessmentBlock 
                             color={this.state.userSubjects.find(element => element.id == assessment.userSubjectId).colorId} 
                             subject={`${this.state.userSubjects.find(element => element.id == assessment.userSubjectId).subject.name} ${assessment.assessmentTypeName}`} 
