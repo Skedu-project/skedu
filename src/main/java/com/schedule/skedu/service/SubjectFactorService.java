@@ -99,6 +99,9 @@ public class SubjectFactorService {
         } else if(diff < 0) {
             diff = 0;
         }
+        if(totalPoints == 0.0) {
+            diff = 0;
+        }
         //System.out.println("diff: " + diff);
         return diff;
     }
@@ -140,6 +143,8 @@ public class SubjectFactorService {
             double subjectFactor = (assessmentFactor*(subjectAssessmentFactor)) + (goalFactor*(diffFromGoal)) + (mpFactor*(daysLeftForMP));
             userSubjectFactor.setSubjectFactor(subjectFactor);
             userSubjectFactor.setUserSubjectId(userSubjectId);
+            userSubjectFactor.setSubjectName(userSubjects.get(i).getSubject().get().getName());
+            userSubjectFactor.setColorId(userSubjects.get(i).getColorId());
 
             userSubjectFactors.add(userSubjectFactor);
         }

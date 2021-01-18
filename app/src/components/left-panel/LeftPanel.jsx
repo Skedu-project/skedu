@@ -50,9 +50,9 @@ class LeftPanel extends React.Component {
     render() {
         const userSubjects = this.props.subjects;
         return (
-            <Card className="m-1" style={{height: "100%"}}>
+            <Card style={{height: "100%"}}>
                 <CardHeader style={{backgroundColor: "lightGray"}}>
-                    <h3 style={{textAlign: "center"}}>My Subjects</h3>
+                    <h3 style={{textAlign: "center"}}>Subjects</h3>
                 </CardHeader>
                 <CardBody style={{overflowY: 'scroll', backgroundColor: "white"}}>
                     <SubjectList subjects={userSubjects}/>

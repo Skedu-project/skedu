@@ -4,9 +4,27 @@ public class UserSubjectFactor {
     private Long userSubjectId;
     private double subjectFactor;
     private double studyTime;
+    private String subjectName;
+    private String colorId;
 
     public Long getUserSubjectId() {
         return userSubjectId;
+    }
+
+    public String getColorId() {
+        return colorId;
+    }
+
+    public void setColorId(String colorId) {
+        this.colorId = colorId;
+    }
+
+    public String getSubjectName() {
+        return subjectName;
+    }
+
+    public void setSubjectName(String subjectName) {
+        this.subjectName = subjectName;
     }
 
     public double getStudyTime() {
