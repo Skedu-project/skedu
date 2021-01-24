@@ -75,4 +75,14 @@ public class UserController {
         User updatedUser = userService.userTotalTime(user);
         return updatedUser.getTotalTime();
     }
+
+    @PutMapping("/users/{id}/saveProfile")
+    public User saveProfile(@PathVariable Long id, @RequestBody User profileInfo){
+        User user = userService.getUser(id).get();
+        user.setCurrentGradeLevel(profileInfo.getCurrentGradeLevel());
+        user.setMarkingPeriodName(profileInfo.getMarkingPeriodName()); 
+        user.setMarkingPeriodEndDate(profileInfo.getMarkingPeriodEndDate()); 
+        User updatedUser = userService.updateProfile(user); 
+        return updatedUser; 
+    }
 }

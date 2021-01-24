@@ -12,7 +12,7 @@ class SubjectList extends React.Component {
     return (
       <Container className="p-0">{
         (subjects && subjects.length > 0) && (subjects.map(subjectItem => (
-          <Subject color={subjectItem.colorId} name={subjectItem.subject.name} goalGrade={subjectItem.goalGrade} />
+          <Subject color={subjectItem.colorId} name={subjectItem.subject.name} goalGrade={subjectItem.goalGrade} actualGrade={Math.round(subjectItem.currentPoints/subjectItem.totalPoints*100)}/>
         )))
       }
     </Container>
