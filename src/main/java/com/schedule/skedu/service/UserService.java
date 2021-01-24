@@ -45,4 +45,8 @@ public class UserService {
     public User userTotalTime(User user) {
         return userRepository.save(user);
     }
+
+    public User updateProfile(User user) {
+        return userRepository.save(user);
+    }
 }
