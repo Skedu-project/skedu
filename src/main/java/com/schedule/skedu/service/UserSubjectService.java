@@ -61,4 +61,8 @@ public class UserSubjectService {
     public Optional<UserSubject> getSubjectById(Long id) {
         return userSubjectRepository.findById(id);
     }
+
+    public UserSubject updateActualGrade(UserSubject userSubject) {
+        return userSubjectRepository.save(userSubject);
+    }
 }

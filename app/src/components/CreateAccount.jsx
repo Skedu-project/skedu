@@ -13,7 +13,8 @@ class CreateAccount extends React.Component {
         event.preventDefault();
         const data = new FormData(event.target);  //Not Object File type
         const cookie = this.props.cookies;
-        cookie.set('email', data.get('email'));
+        const time = new Date(Date.now()+(4.32*10000000));
+        cookie.set('email', data.get('email'), {expires: time});
         if (data.get('password') == data.get('verifyPassword')) {
             const data2 = {
                 firstName: data.get('firstName'),
@@ -31,7 +32,7 @@ class CreateAccount extends React.Component {
                 body: JSON.stringify(data2)
             });
             const body = await response.json();
-            cookie.set('id', body.id);
+            cookie.set('id', body.id, {expires: time});
         }
         else {
             alert("passwords do not match");

@@ -44,17 +44,19 @@ class LeftPanel extends React.Component {
 
     async componentWillMount(){
         this.getAllSubjects();
-        this.getAllColors(); 
+        this.getAllColors();
     }
 
     render() {
         const userSubjects = this.props.subjects;
+        //this.changeMessage();
         return (
             <Card style={{height: "100%"}}>
                 <CardHeader style={{backgroundColor: "lightGray"}}>
                     <h3 style={{textAlign: "center"}}>Subjects</h3>
                 </CardHeader>
                 <CardBody style={{overflowY: 'scroll', backgroundColor: "white"}}>
+                    {(this.props.subjects.length == 0) && (<p style={{opacity: "0.5"}}>Please input your subjects</p>)}
                     <SubjectList subjects={userSubjects}/>
                 </CardBody>
                 <CardFooter style={{backgroundColor: "lightGray"}}>

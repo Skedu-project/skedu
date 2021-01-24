@@ -42,9 +42,7 @@ class TimeBlock extends React.Component {
             <Input type="radio" style={{margin: "0%", transform: "scale(2)", padding: '10px', verticalAlign: 'middle', height: '100%', opacity: "0.75", left: "25%"}}/>
           </Col>
           <Col xs={7} className="p-0" style={{height: "100%", textAlign: "center"}}>
-            <div>
-              <h4 className={"p-2 m-0 text-" + this.state.textColor + " " + this.props.color} style={{opacity: "0.85"}}>{this.props.subject}</h4>
-            </div>
+              <h4 className={"p-2 m-0 text-" + this.state.textColor + " " + this.props.color} style={{opacity: "0.85", height: "100%"}}>{this.props.subject}</h4>
           </Col>
           <Col xs={2} className="p-2 border-right border-dark" style={{textAlign: "center", backgroundColor: "white"}}>
             <h5 className="p-0 m-0">{this.props.percent}%</h5>

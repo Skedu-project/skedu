@@ -58,7 +58,7 @@ class HomePage extends React.Component {
                     <Row id="bot_right" style={{height: "88%", padding: "10px"}}>
                         <Col id="HW time" xs={8} style={{height: "100%"}}>
                             <Container>
-                                <TimeBlockList />
+                                <TimeBlockList subjects={this.state.subjects}/>
                             </Container>
                         </Col>
                         <Col xs={4} style={{height: "100%"}}>
