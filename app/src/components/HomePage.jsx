@@ -23,11 +23,10 @@ class HomePage extends React.Component {
               'Content-Type': 'application/json'  //sending data in JSON format
           }
         });
-    
         const body = await response.json();
         this.setState({subjects: body}); //subjects has users subjects
     }
-
+    
     async componentWillMount(){
         this.getSubjects();
     }
@@ -40,10 +39,12 @@ class HomePage extends React.Component {
         }
         const largeContainer = {
             height: "100vh",
+            //maxHeight: "100vh",
             width: "100vw",
             paddingLeft: "15px",
             paddingRight: "0px",
-            position: "fixed"
+            position: "fixed",
+            //overflowY: "scroll"
         };
         return(
             <div style={largeContainer}>
@@ -58,7 +59,7 @@ class HomePage extends React.Component {
                     <Row id="bot_right" style={{height: "88%", padding: "10px"}}>
                         <Col id="HW time" xs={8} style={{height: "100%"}}>
                             <Container>
-                                <TimeBlockList />
+                                <TimeBlockList subjects={this.state.subjects}/>
                             </Container>
                         </Col>
                         <Col xs={4} style={{height: "100%"}}>

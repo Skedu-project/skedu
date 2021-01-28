@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -41,5 +42,13 @@ public class UserSubjectController {
     @GetMapping("/users/{id}/subject")
     public Optional<UserSubject> getSubjectById(@PathVariable Long id) {
         return userSubjectService.getSubjectById(id);
+    }
+
+    @PutMapping("/users/{userSubjectId}/subject")
+    public UserSubject updateActualGrade(@PathVariable Long userSubjectId, @RequestParam double currentPoints, @RequestParam double totalPoints) {
+        UserSubject userSubject = userSubjectService.getSubjectById(userSubjectId).get();
+        userSubject.setCurrentPoints(currentPoints);
+        userSubject.setTotalPoints(totalPoints);
+        return userSubjectService.updateActualGrade(userSubject);
     }
 }

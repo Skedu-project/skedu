@@ -11,9 +11,17 @@ class SubjectList extends React.Component {
     const subjects = this.props.subjects;
     return (
       <Container className="p-0">{
-        (subjects && subjects.length > 0) && (subjects.map(subjectItem => (
-          <Subject color={subjectItem.colorId} name={subjectItem.subject.name} goalGrade={subjectItem.goalGrade} actualGrade={Math.round(subjectItem.currentPoints/subjectItem.totalPoints*100)}/>
-        )))
+        (subjects && subjects.length > 0) && (subjects.map(subjectItem => {
+          const totalPoints = subjectItem.totalPoints ? subjectItem.totalPoints : 1;
+          return (
+          <Subject 
+          color={subjectItem.colorId} 
+          name={subjectItem.subject.name} 
+          goalGrade={subjectItem.goalGrade} 
+          userSubjectId={subjectItem.id}
+          actualGrade={Math.round(subjectItem.currentPoints/totalPoints*100)}/>
+        )}
+        ))
       }
     </Container>
     )

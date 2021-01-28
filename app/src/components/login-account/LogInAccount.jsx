@@ -37,9 +37,9 @@ class LogInAccount extends React.Component {
                 }
             });
             const cookie = this.props.cookies;
-            cookie.set('email', data.get('email'));
-            console.log(body);
-            cookie.set('id', body.id);
+            const time = new Date(Date.now()+(4.32*10000000));
+            cookie.set('email', data.get('email'), {expires: time});
+            cookie.set('id', body.id, {expires: time});
             this.props.history.push('/home');
         } else {
             alert("Sign in credentials did not match, please try again.");

@@ -2,13 +2,16 @@ import React from 'react';
 import { withRouter } from 'react-router-dom';
 import { Button, Container, Row, Col, Form, FormGroup, Input, Label, Card, Fade, InputGroup, Modal, ModalHeader, ModalBody, ModalFooter, ButtonGroup, Popover, PopoverHeader, PopoverBody } from 'reactstrap';
 import { withCookies } from 'react-cookie';
+import logo from '../skeduLogo.png'; 
+// app\public
+// app\src\components\home-page-header\HomePageHeader.jsx
 
 class HomePageHeader extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
             date: new Date().toDateString('en-US'),
-            time: new Date().toLocaleTimeString('en-US'),
+            time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'}),
             fadeIn: false,
             totalTime: 0,
             popUp: true,
@@ -16,7 +19,8 @@ class HomePageHeader extends React.Component {
             cookie: this.props.cookies,
             isModalOpen: false,
             mpName: 0,
-            mpEndDate: 0
+            mpEndDate: 0,
+            user: {}
         };
         this.switchFadeInState = this.switchFadeInState.bind(this);
         this.handleTotalTime = this.handleTotalTime.bind(this);
@@ -29,7 +33,7 @@ class HomePageHeader extends React.Component {
         this.setState({date: new Date().toDateString('en-US')});
     }
     changeTime() {
-        this.setState({time: new Date().toLocaleTimeString('en-US')});
+        this.setState({time: new Date().toLocaleTimeString([], {hour: '2-digit', minute:'2-digit'})});
     }
 
     toggle() {
@@ -40,8 +44,8 @@ class HomePageHeader extends React.Component {
   
     async componentWillMount() {
         setInterval(this.changeDate.bind(this), 60000);
-        setInterval(this.changeTime.bind(this), 1000);
-        const response = await fetch('/api/usersByEmail?email=' + this.state.cookie.get('email') + '&totalTime=', {
+        setInterval(this.changeTime.bind(this), 5000);
+        const response = await fetch('/api/usersByEmail?email=' + this.state.cookie.get('email'), {
             method: 'GET',
             headers: {
                 'Accept': 'application/json',  //receiving data in JSON format in browser
@@ -49,6 +53,7 @@ class HomePageHeader extends React.Component {
             }
         });
         const body = await response.json();
+        this.setState({user: body});
         this.setState({totalTime: body.totalTime});
         this.setState({userGradeLevel: body.currentGradeLevel});
         if(this.state.userGradeLevel != 0) {
@@ -120,7 +125,7 @@ class HomePageHeader extends React.Component {
     
     render() {
         const headerStyle = {
-            backgroundColor: "#B8B8B8",
+            backgroundColor: "lightGray", //#B8B8B8
             height: "100%"
             /*width: "1000px"*/
         }
@@ -134,19 +139,22 @@ class HomePageHeader extends React.Component {
             textAlign: "center",
         }
         return(
-            <div className="ml-3 mr-3">
+            <div className="ml-3 mr-3" style={{height: "100%"}}>
                 <Row style={headerStyle} className="rounded-lg">
-                        <Col xs={10}>
-                            <Row><h1 className="ml-3">My Planner</h1></Row>
+                        <Col xs={1} style={{}}>
+                            <img className="pt-1 pl-3" src={logo} style={{resizeMode: 'contain', height: "85px"}}/>
+                        </Col>
+                        <Col xs={5} className="pl-5">
+                            <Row><h1 className="ml-3">Daily Planner</h1></Row>
                             <Row>
-                                <Col xs={7}><h4>{this.state.date} | MP 2 | {this.state.time}</h4></Col>
-                                <Col xs={5}><Button color="primary" onClick={this.switchFadeInState}><h6>Study Time Today: {this.state.totalTime}</h6></Button></Col>
+                                <h4 className="ml-3">{this.state.date} | MP {this.state.user.markingPeriodName} | {this.state.time}</h4>
                             </Row>
                         </Col>
+                        <Col xs={4} className="p-3" style={{height: "100%"}}><Button style={{height: "100%"}} color="primary" onClick={this.switchFadeInState}><h6>Study Time Today: {this.state.totalTime}</h6></Button></Col>
                         <Col xs={2}>
                             <div className="col-3"></div>
                             <div className="h-100 col-5 p-0" style={{textAlign: "center"}} id="profilePopover">
-                            <ButtonGroup>
+                            <ButtonGroup className="p-1">
                                 <ButtonGroup vertical id="profilePopover">
                                     <Button type="button" id="profilePopover" color="secondary" style={{height: "93%", width: "100%"}} onClick={this.toggle}>
                                         <h6>Profile</h6>

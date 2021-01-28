@@ -92,14 +92,14 @@ public class SubjectFactorService {
     }
 
     public double calculateDifferenceFromGoal(double goalGrade, double totalPoints, double currentPoints) {
+        if(totalPoints == 0.0) {
+            totalPoints = 1.0;
+        }
         double actualGrade = currentPoints/totalPoints;
         double diff = 5*((goalGrade/100)-actualGrade);
         if(diff > 1) {
             diff = 1;
         } else if(diff < 0) {
-            diff = 0;
-        }
-        if(totalPoints == 0.0) {
             diff = 0;
         }
         //System.out.println("diff: " + diff);
@@ -138,7 +138,12 @@ public class SubjectFactorService {
                 subjectAssessmentFactor = 1;
             }
             double diffFromGoal = calculateDifferenceFromGoal(userSubjects.get(i).getGoalGrade(), userSubjects.get(i).getTotalPoints(), userSubjects.get(i).getCurrentPoints());
-            double daysLeftForMP = calculateDaysLeftForMP(user.get().getMarkingPeriodEndDate());
+            double daysLeftForMP;
+            if (user.get().getMarkingPeriodEndDate() == null) {
+                daysLeftForMP = 0;
+            } else {
+                daysLeftForMP = calculateDaysLeftForMP(user.get().getMarkingPeriodEndDate());
+            }
             
             double subjectFactor = (assessmentFactor*(subjectAssessmentFactor)) + (goalFactor*(diffFromGoal)) + (mpFactor*(daysLeftForMP));
             userSubjectFactor.setSubjectFactor(subjectFactor);
@@ -151,6 +156,9 @@ public class SubjectFactorService {
         double totSubjectFactors = 0.0;
         for(int k=0; k<userSubjectFactors.size(); k++) {
             totSubjectFactors += userSubjectFactors.get(k).getSubjectFactor();
+        }
+        if(totSubjectFactors == 0.0) {
+            totSubjectFactors = 1.0;
         }
         for(int n=0; n<userSubjectFactors.size(); n++) {
             userSubjectFactors.get(n).setSubjectFactor((userSubjectFactors.get(n).getSubjectFactor())/totSubjectFactors);

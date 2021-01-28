@@ -15,13 +15,15 @@ class HomePageAssessments extends React.Component {
             assessmentTypes: [],
             assessmentObjectArray: [],
             completeAssessmentObjectArray: [],
-            userSubjects: []
+            userSubjects: [],
+            message: "After inputting your subjects, please add any assessments so we can tell you how to study!"
         }
         this.toggleAssessment = this.toggleAssessment.bind(this);
         this.handleAssessment = this.handleAssessment.bind(this);
         this.fetchAssessmentData = this.fetchAssessmentData.bind(this);
         this.toggleCompleteAssessments = this.toggleCompleteAssessments.bind(this);
     }
+
     toggleAssessment() {
         var opp = !this.state.assessmentToggle;
         this.setState({assessmentToggle: opp});
@@ -68,6 +70,9 @@ class HomePageAssessments extends React.Component {
         assessmentsArray.sort(this.compare);
         this.setState({assessmentObjectArray: assessmentsArray});
         this.setState({completeAssessmentObjectArray: completeAssessmentsArray});
+        if(bodyAssessments.length != 0) {
+            this.setState({message: ""});
+        }
     }
 
     async componentDidMount() {
@@ -78,7 +83,7 @@ class HomePageAssessments extends React.Component {
             subjectArray.push(body[i].subject);
         }
         this.setState({subjects: subjectArray});
-        this.setState({userSubjects: body})
+        this.setState({userSubjects: body});
 
         const response2 = await fetch('/api/assessments', {
             method: 'GET',
@@ -94,6 +99,7 @@ class HomePageAssessments extends React.Component {
             assessmentTypesArray.push(body2[j].name);
         }
         this.setState({assessmentTypes: assessmentTypesArray});
+
         this.fetchAssessmentData();
     }
 
@@ -106,7 +112,7 @@ class HomePageAssessments extends React.Component {
                 subjectArray.push(body[i].subject);
             }
             this.setState({subjects: subjectArray});
-            this.setState({userSubjects: body})
+            this.setState({userSubjects: body});
             console.log(this.state.userSubjects);
         }
     }
@@ -149,8 +155,9 @@ class HomePageAssessments extends React.Component {
             <Card style={{height: "100%"}}>
                 <CardHeader style={{textAlign: "center", padding: "10px", backgroundColor: "lightGray"}}><h2>Assessments</h2></CardHeader>
                 <CardBody style={{overflowY: "scroll", backgroundColor: "whiteSmoke", height: "100%"}}>
+                    <p style={{opacity: "0.5"}}>{this.state.message}</p>
                     <Container>
-                        {this.state.assessmentObjectArray.map(assessment => (<Row className="pb-2"><AssessmentBlock 
+                        {this.state.assessmentObjectArray.map(assessment => (this.state.userSubjects) && (this.state.userSubjects.length > 0) && (<Row className="pb-2"><AssessmentBlock 
                             color={this.state.userSubjects.find(element => element.id == assessment.userSubjectId).colorId} 
                             subject={`${this.state.userSubjects.find(element => element.id == assessment.userSubjectId).subject.name} ${assessment.assessmentTypeName}`} 
                             date={`${new Date(assessment.date).getMonth()+1}/${new Date(assessment.date).getDate()+1}`}
@@ -160,7 +167,7 @@ class HomePageAssessments extends React.Component {
                             onUpdate={this.fetchAssessmentData} /></Row>))}
                         <Button onClick={this.toggleCompleteAssessments} color="dark" className="text-white mb-2 pt-0 pb-0 pl-1 pr-1" style={{opacity: "0.3"}}>Completed</Button>
                         <Collapse isOpen={this.state.completeAssessments}>
-                        {this.state.completeAssessmentObjectArray.map(completedAssessment => (<Row className="pb-2"><AssessmentBlock 
+                        {this.state.completeAssessmentObjectArray.map(completedAssessment => (this.state.userSubjects) && (this.state.userSubjects.length > 0) && (<Row className="pb-2"><AssessmentBlock 
                             color={this.state.userSubjects.find(element => element.id == completedAssessment.userSubjectId).colorId} 
                             subject={`${this.state.userSubjects.find(element => element.id == completedAssessment.userSubjectId).subject.name} ${completedAssessment.assessmentTypeName}`} 
                             date={`${new Date(completedAssessment.date).getMonth()+1}/${new Date(completedAssessment.date).getDate()+1}`}
