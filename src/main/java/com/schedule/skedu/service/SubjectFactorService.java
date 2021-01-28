@@ -157,6 +157,9 @@ public class SubjectFactorService {
         for(int k=0; k<userSubjectFactors.size(); k++) {
             totSubjectFactors += userSubjectFactors.get(k).getSubjectFactor();
         }
+        if(totSubjectFactors == 0.0) {
+            totSubjectFactors = 1.0;
+        }
         for(int n=0; n<userSubjectFactors.size(); n++) {
             userSubjectFactors.get(n).setSubjectFactor((userSubjectFactors.get(n).getSubjectFactor())/totSubjectFactors);
             double totTime = user.get().getTotalTime();

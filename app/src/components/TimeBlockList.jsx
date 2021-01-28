@@ -89,8 +89,8 @@ class TimeBlockList extends React.Component {
             <Container>
             {this.state.userSubjectFactorArray.map(userSubjectFactor => (<Row className="pb-2"><TimeBlock 
                 color={userSubjectFactor.colorId} 
-                subject={userSubjectFactor.subjectName}  
-                time={Math.round(userSubjectFactor.studyTime)}
+                subject={userSubjectFactor.subjectName ? userSubjectFactor.subjectName : "--"}  
+                time={userSubjectFactor.studyTime ? Math.round(userSubjectFactor.studyTime) : "--"}
                 percent={Math.round(100*userSubjectFactor.subjectFactor)} /></Row>))}
             </Container>
           </CardBody>

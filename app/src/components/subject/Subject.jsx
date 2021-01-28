@@ -1,19 +1,18 @@
 import React from 'react';
-<<<<<<< HEAD
-import { Row, Col, Container, Progress } from 'reactstrap'; 
-=======
-import { Row, Col, Container, Modal, ModalBody, ModalHeader, ModalFooter, Input, InputGroup, InputGroupAddon, InputGroupText, Button, FormGroup, Form, Label } from 'reactstrap'; 
->>>>>>> f3aae44 (home page changes)
+import { Row, Col, Container, Progress, Modal, ModalBody, ModalHeader, ModalFooter, Input, InputGroup, InputGroupAddon, InputGroupText, Button, FormGroup, Form, Label } from 'reactstrap'; 
 
 class Subject extends React.Component {
   constructor(props) {
     super(props);
     this.state = {
-<<<<<<< HEAD
       difference: 0,
-      color: ""
+      color: "",
+      editedUserSubject: {},
+      userSubjectToggle: false
     };
     this.checkAtGoalGrade = this.checkAtGoalGrade.bind(this);
+    this.toggleUserSubject = this.toggleUserSubject.bind(this);
+    this.handleSubject = this.handleSubject.bind(this);
   }
 
   checkAtGoalGrade(){
@@ -28,13 +27,7 @@ class Subject extends React.Component {
 
   componentDidMount() {
     this.checkAtGoalGrade(); 
-=======
-      editedUserSubject: {},
-      userSubjectToggle: false
     }
-    this.toggleUserSubject = this.toggleUserSubject.bind(this);
-    this.handleSubject = this.handleSubject.bind(this);
-  }
   
   toggleUserSubject() {
     var opp = !this.state.userSubjectToggle;
@@ -52,7 +45,6 @@ class Subject extends React.Component {
       }
     });
     //update
->>>>>>> f3aae44 (home page changes)
   }
 
   render() {
@@ -61,9 +53,8 @@ class Subject extends React.Component {
       <Container onClick={this.toggleUserSubject} style={{marginBottom: "10px", backgroundColor: "whiteSmoke"}}>
         <Row style={{border: '1px solid', borderRadius: '7px'/*, height: "8vh"*/}}>
             <Col xs="1" className={this.props.color} style={{ /*width:'20px',*/ borderTopLeftRadius: '7px', borderBottomLeftRadius: '7px'}} />
-            <Col xs="9" style={{textAlign: 'center'}}>
+            <Col xs="9" className="pb-2" style={{textAlign: 'center'}}>
                 <h5>{this.props.name}</h5>
-<<<<<<< HEAD
                 <div style={{borderRadius: "2px", backgroundColor: "lightGray"}}><h8 style={{}}>Goal: {this.props.goalGrade}%</h8></div>
                 <div>
                   <Progress multi>
@@ -71,9 +62,6 @@ class Subject extends React.Component {
                     <Progress bar color={this.state.color} value={this.state.difference}>{this.state.difference}</Progress>
                   </Progress>
                 </div>
-=======
-                <div style={{borderRadius: "2px", backgroundColor: "lightGray"}}><h6>{this.props.goalGrade}%</h6></div>
->>>>>>> f3aae44 (home page changes)
             </Col>
         </Row>
       </Container>
