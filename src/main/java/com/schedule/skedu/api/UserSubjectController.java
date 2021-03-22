@@ -8,6 +8,7 @@ import com.schedule.skedu.model.UserSubjectDetails;
 import com.schedule.skedu.service.UserSubjectService;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -45,10 +46,12 @@ public class UserSubjectController {
     }
 
     @PutMapping("/users/{userSubjectId}/subject")
-    public UserSubject updateActualGrade(@PathVariable Long userSubjectId, @RequestParam double currentPoints, @RequestParam double totalPoints) {
-        UserSubject userSubject = userSubjectService.getSubjectById(userSubjectId).get();
-        userSubject.setCurrentPoints(currentPoints);
-        userSubject.setTotalPoints(totalPoints);
-        return userSubjectService.updateActualGrade(userSubject);
+    public UserSubject updateSubjectDetails(@PathVariable Long userSubjectId, @RequestBody UserSubject userSubject) {
+        return userSubjectService.updateSubject(userSubject);
+    }
+
+    @DeleteMapping("/users/{userSubjectId}/subject")
+    public void deleteSubjectById(@PathVariable Long userSubjectId){
+        userSubjectService.deleteSubject(userSubjectId);
     }
 }

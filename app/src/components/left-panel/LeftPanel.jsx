@@ -57,7 +57,7 @@ class LeftPanel extends React.Component {
                 </CardHeader>
                 <CardBody style={{overflowY: 'scroll', backgroundColor: "white"}}>
                     {(this.props.subjects.length == 0) && (<p style={{opacity: "0.5"}}>Please input your subjects</p>)}
-                    <SubjectList subjects={userSubjects}/>
+                    <SubjectList subjects={userSubjects}  allColors={this.state.allColors} onSave={this.props.refresh}/>
                 </CardBody>
                 <CardFooter style={{backgroundColor: "lightGray"}}>
                     <div style={{textAlign: "center"}}>
