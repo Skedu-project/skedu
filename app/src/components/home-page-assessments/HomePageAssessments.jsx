@@ -10,6 +10,7 @@ class HomePageAssessments extends React.Component {
         this.state = {
             assessmentToggle: false,
             completeAssessments: false,
+            // updateAssessmentToggle: false,
             cookie: this.props.cookies,
             subjects: [],
             assessmentTypes: [],
@@ -22,6 +23,8 @@ class HomePageAssessments extends React.Component {
         this.handleAssessment = this.handleAssessment.bind(this);
         this.fetchAssessmentData = this.fetchAssessmentData.bind(this);
         this.toggleCompleteAssessments = this.toggleCompleteAssessments.bind(this);
+        // this.toggleUpdateAssessments = this.toggleUpdateAssessments.bind(this); 
+        // this.deleteAssessment = this.deleteAssessment.bind(this); 
     }
 
     toggleAssessment() {
@@ -33,6 +36,11 @@ class HomePageAssessments extends React.Component {
         var opp = !this.state.completeAssessments;
         this.setState({completeAssessments: opp});
     }
+
+    // toggleUpdateAssessments() {
+    //     var opp = !this.state.updateAssessmentToggle;
+    //     this.setState({updateAssessmentToggle: opp});
+    // }
 
     compare(a, b) {
         // Use toUpperCase() to ignore character casing
@@ -156,7 +164,8 @@ class HomePageAssessments extends React.Component {
                 <CardHeader style={{textAlign: "center", padding: "10px", backgroundColor: "lightGray"}}><h2>Assessments</h2></CardHeader>
                 <CardBody style={{overflowY: "scroll", backgroundColor: "whiteSmoke", height: "100%"}}>
                     <p style={{opacity: "0.5"}}>{this.state.message}</p>
-                    <Container>
+                    <Container> 
+                    {/* onClick={this.toggleUpdateAssessments} */}
                         {this.state.assessmentObjectArray.map(assessment => (this.state.userSubjects) && (this.state.userSubjects.length > 0) && (<Row className="pb-2"><AssessmentBlock 
                             color={this.state.userSubjects.find(element => element.id == assessment.userSubjectId).colorId} 
                             subject={`${this.state.userSubjects.find(element => element.id == assessment.userSubjectId).subject.name} ${assessment.assessmentTypeName}`} 
@@ -222,6 +231,15 @@ class HomePageAssessments extends React.Component {
                     </ModalFooter>
                 </Form>
             </Modal>
+            {/* <Modal isOpen={this.state.updateAssessmentToggle} toggle={this.toggleUpdateAssessments}>
+                <ModalHeader> Edit Assessment</ModalHeader>
+                <ModalBody> change</ModalBody>
+                <ModalFooter>
+                    <Button color="primary" type="submit">Submit</Button>
+                    <Button color="danger" onClick={this.deleteAssessment}>Delete Assessment</Button>
+                    <Button color="secondary" >Cancel</Button>
+                </ModalFooter>
+            </Modal> */}
             </div>
         );
     }

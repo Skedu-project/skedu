@@ -18,9 +18,16 @@ class SubjectList extends React.Component {
           color={subjectItem.colorId} 
           name={subjectItem.subject.name} 
           goalGrade={subjectItem.goalGrade} 
-          userSubjectId={subjectItem.id}
-          actualGrade={Math.round(subjectItem.currentPoints/totalPoints*100)}/>
-        )}
+          userSubjectId={subjectItem.id} 
+          actualGrade={Math.round(subjectItem.currentPoints/totalPoints*100)}
+          allColors={this.props.allColors} 
+          update={this.props.onSave}
+          subjectId={subjectItem.subject.id}
+          userId={subjectItem.userId}
+          userGradeLevel={subjectItem.userGradeLevel}
+          id={subjectItem.id}
+          currentPoints={subjectItem.currentPoints}
+          totalPoints={subjectItem.totalPoints}/>)}
         ))
       }
     </Container>

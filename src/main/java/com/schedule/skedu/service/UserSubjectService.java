@@ -62,7 +62,12 @@ public class UserSubjectService {
         return userSubjectRepository.findById(id);
     }
 
-    public UserSubject updateActualGrade(UserSubject userSubject) {
+    public UserSubject updateSubject(UserSubject userSubject) {
         return userSubjectRepository.save(userSubject);
     }
+
+    public void deleteSubject(Long id) {
+        userSubjectRepository.deleteById(id);
+    }
+
 }
