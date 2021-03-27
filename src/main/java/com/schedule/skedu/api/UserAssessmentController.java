@@ -33,8 +33,8 @@ public class UserAssessmentController {
         return userAssessmentService.addUserAssessment(userAssessment);
     }
 
-    @DeleteMapping("/users/{id}/assessments")
-    public void deleteUserAssessmentsById(@PathVariable Long id) {
+    @DeleteMapping("/assessments/{id}")
+    public void deleteUserAssessment(@PathVariable Long id) {
         userAssessmentService.deleteUserAssessmentsById(id);
     }
 
@@ -44,5 +44,10 @@ public class UserAssessmentController {
         userAssessment.setIsComplete(isComplete);
         UserAssessment updatedUserAssessment = userAssessmentService.userIsComplete(userAssessment);
         return updatedUserAssessment.getIsComplete();
+    }
+
+    @PutMapping("/assessments/{id}")
+    public UserAssessment updateSubjectDetails(@PathVariable Long id, @RequestBody UserAssessment userAssessment) {
+        return userAssessmentService.updateAssessment(userAssessment);
     }
 }

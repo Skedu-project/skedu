@@ -4,6 +4,7 @@ import { withCookies } from 'react-cookie';
 import { Container, Col, Row, Button, Input } from 'reactstrap';
 import classNames from 'classnames/bind';
 import styles from'./AssessmentBlock.css';
+import AssessmentModal from '../assessment-modal/AssessmentModal';
 const style = classNames.bind(styles);
 
 class AssessmentBlock extends React.Component {
@@ -13,10 +14,13 @@ class AssessmentBlock extends React.Component {
             assessmentId: this.props.id,
             textColor: "",
             date: new Date().toDateString('en-US'),
-            daysToAssessment: 0
+            daysToAssessment: 0, 
+            isOpen: false
         }
         this.deleteAssessment = this.deleteAssessment.bind(this);
         this.updateColor = this.updateColor.bind(this);
+        this.openAssessmentModal = this.openAssessmentModal.bind(this); 
+        this.closeAssessmentModal = this.closeAssessmentModal.bind(this);
     }
 
     updateColor() {
@@ -26,6 +30,14 @@ class AssessmentBlock extends React.Component {
             this.setState({textColor: "white"});
         }
     }
+
+    openAssessmentModal() {
+        this.setState({isOpen: true});
+      }
+
+    closeAssessmentModal() {
+        this.setState({isOpen: false});
+      }
 
     componentDidMount() {
         this.updateColor();
@@ -54,7 +66,7 @@ class AssessmentBlock extends React.Component {
 
     render() {
         return(
-            <Container fluid className="m-0 rounded border border-dark border-2">
+            <Container fluid className="m-0 rounded border border-dark border-2" onClick={this.openAssessmentModal}>
                 <Row style={{height: "100%"}}>
                     <Col xs={1} className={"p-0 " + this.props.color} style={{textAlign: "center"}}>
                         <Input type="radio" onClick={this.deleteAssessment} style={{margin: "0%", transform: "scale(2)", verticalAlign: 'middle', height: '100%', zIndex: "2"}} className={style('checkButton')}/>
@@ -66,6 +78,20 @@ class AssessmentBlock extends React.Component {
                         <h6 className="p-0 m-0">{this.props.date}</h6>
                     </Col>
                 </Row>
+                <AssessmentModal 
+                isOpen={this.state.isOpen} 
+                onClose={this.closeAssessmentModal} 
+                subject={this.props.subjectName}
+                assessmentTypes={this.props.assessmentTypes}
+                assessmentType={this.props.assessmentTypeName}
+                assessmentInfo={this.props.assessmentInfo}
+                totalPointsAvailable={this.props.totalPointsAvailable}
+                priority={this.props.priority}
+                date={this.props.dateRaw}
+                update={this.props.update}
+                id={this.state.assessmentId}
+                userId={this.props.userId}
+                userSubjectId={this.props.userSubjectId}/> 
             </Container>
         );
     }
