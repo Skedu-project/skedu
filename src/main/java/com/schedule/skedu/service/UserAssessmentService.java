@@ -33,4 +33,8 @@ public class UserAssessmentService {
     public UserAssessment userIsComplete(UserAssessment userAssessment) {
         return userAssessmentRepository.save(userAssessment);
     }
+
+    public UserAssessment updateAssessment(UserAssessment userAssessment){
+        return userAssessmentRepository.save(userAssessment);
+    }
 }

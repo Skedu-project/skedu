@@ -10,21 +10,21 @@ class HomePageAssessments extends React.Component {
         this.state = {
             assessmentToggle: false,
             completeAssessments: false,
-            // updateAssessmentToggle: false,
             cookie: this.props.cookies,
             subjects: [],
             assessmentTypes: [],
             assessmentObjectArray: [],
             completeAssessmentObjectArray: [],
             userSubjects: [],
+            assessmentId: 0,
+            assessmentInfo: [],
             message: "After inputting your subjects, please add any assessments so we can tell you how to study!"
         }
         this.toggleAssessment = this.toggleAssessment.bind(this);
         this.handleAssessment = this.handleAssessment.bind(this);
         this.fetchAssessmentData = this.fetchAssessmentData.bind(this);
         this.toggleCompleteAssessments = this.toggleCompleteAssessments.bind(this);
-        // this.toggleUpdateAssessments = this.toggleUpdateAssessments.bind(this); 
-        // this.deleteAssessment = this.deleteAssessment.bind(this); 
+        this.setAssessmentId = this.setAssessmentId.bind(this);
     }
 
     toggleAssessment() {
@@ -36,11 +36,6 @@ class HomePageAssessments extends React.Component {
         var opp = !this.state.completeAssessments;
         this.setState({completeAssessments: opp});
     }
-
-    // toggleUpdateAssessments() {
-    //     var opp = !this.state.updateAssessmentToggle;
-    //     this.setState({updateAssessmentToggle: opp});
-    // }
 
     compare(a, b) {
         // Use toUpperCase() to ignore character casing
@@ -54,6 +49,10 @@ class HomePageAssessments extends React.Component {
           comparison = -1;
         }
         return comparison;
+    }
+
+    setAssessmentId(id){
+        this.setState({assessmentId: id}); 
     }
 
     async fetchAssessmentData() {
@@ -164,16 +163,25 @@ class HomePageAssessments extends React.Component {
                 <CardHeader style={{textAlign: "center", padding: "10px", backgroundColor: "lightGray"}}><h2>Assessments</h2></CardHeader>
                 <CardBody style={{overflowY: "scroll", backgroundColor: "whiteSmoke", height: "100%"}}>
                     <p style={{opacity: "0.5"}}>{this.state.message}</p>
-                    <Container> 
-                    {/* onClick={this.toggleUpdateAssessments} */}
+                    <Container onClick={this.toggleUpdateAssessments}> 
                         {this.state.assessmentObjectArray.map(assessment => (this.state.userSubjects) && (this.state.userSubjects.length > 0) && (<Row className="pb-2"><AssessmentBlock 
                             color={this.state.userSubjects.find(element => element.id == assessment.userSubjectId).colorId} 
                             subject={`${this.state.userSubjects.find(element => element.id == assessment.userSubjectId).subject.name} ${assessment.assessmentTypeName}`} 
+                            subjectName={this.state.userSubjects.find(element => element.id == assessment.userSubjectId).subject.name}
+                            assessmentTypeName={assessment.assessmentTypeName}
                             date={`${new Date(assessment.date).getMonth()+1}/${new Date(assessment.date).getDate()+1}`}
                             dateFormat={new Date(assessment.date).toDateString('en-US')}
+                            dateRaw={new Date(assessment.date).toISOString().split('T')[0]}
                             complete={false} 
                             id={assessment.id} 
-                            onUpdate={this.fetchAssessmentData} /></Row>))}
+                            onUpdate={this.fetchAssessmentData} 
+                            assessmentTypes={this.state.assessmentTypes}
+                            totalPointsAvailable={assessment.totalPointsAvailable}
+                            priority={assessment.priority}
+                            update={this.fetchAssessmentData}
+                            userId={assessment.userId}
+                            userSubjectId={assessment.userSubjectId}
+                            onClick={() => (this.setAssessmentId(assessment.id))}/></Row>))}
                         <Button onClick={this.toggleCompleteAssessments} color="dark" className="text-white mb-2 pt-0 pb-0 pl-1 pr-1" style={{opacity: "0.3"}}>Completed</Button>
                         <Collapse isOpen={this.state.completeAssessments}>
                         {this.state.completeAssessmentObjectArray.map(completedAssessment => (this.state.userSubjects) && (this.state.userSubjects.length > 0) && (<Row className="pb-2"><AssessmentBlock 
@@ -183,7 +191,7 @@ class HomePageAssessments extends React.Component {
                             dateFormat={new Date(completedAssessment.date).toDateString('en-US')}
                             complete={true} 
                             id={completedAssessment.id} 
-                            onUpdate={this.fetchAssessmentData} /></Row>))}
+                            onUpdate={this.fetchAssessmentData}/></Row>))}
                         </Collapse>
                     </Container>
                 </CardBody>
@@ -231,15 +239,6 @@ class HomePageAssessments extends React.Component {
                     </ModalFooter>
                 </Form>
             </Modal>
-            {/* <Modal isOpen={this.state.updateAssessmentToggle} toggle={this.toggleUpdateAssessments}>
-                <ModalHeader> Edit Assessment</ModalHeader>
-                <ModalBody> change</ModalBody>
-                <ModalFooter>
-                    <Button color="primary" type="submit">Submit</Button>
-                    <Button color="danger" onClick={this.deleteAssessment}>Delete Assessment</Button>
-                    <Button color="secondary" >Cancel</Button>
-                </ModalFooter>
-            </Modal> */}
             </div>
         );
     }
