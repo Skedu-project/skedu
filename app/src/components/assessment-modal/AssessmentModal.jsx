@@ -1,5 +1,8 @@
 import React from 'react';
 import {Button, Modal, ModalBody, ModalHeader, ModalFooter, Form, FormGroup, Label, Input} from 'reactstrap';
+import classNames from 'classnames/bind';
+import styles from '../settings-modal/DarkMode.scss'; 
+const style = classNames.bind(styles);
 
 class AssessmentModal extends React.Component {
   constructor(props) {
@@ -16,10 +19,6 @@ class AssessmentModal extends React.Component {
 toggleUpdateAssessments() {
     var opp = !this.state.updateAssessmentToggle;
     this.setState({updateAssessmentToggle: opp});
-}
-
-componentDidMount(){
-    console.log(this.props.id); 
 }
 
 async deleteAssessment(){
@@ -65,7 +64,7 @@ async updateAssessmentInfo(formJSON){
 
   render() {
     return (
-      <div>
+      <div className={style('modal')}>
            <Modal isOpen={this.props.isOpen} toggle={this.toggleUpdateAssessments}>
               <ModalHeader> Edit Assessment</ModalHeader>
                 <Form onSubmit={this.handleAssessment}>
@@ -77,7 +76,7 @@ async updateAssessmentInfo(formJSON){
                     <FormGroup>
                         <Label for="assessmentTypeName">Change Assessment Type</Label>
                         <Input type="select" name="assessmentTypeName" id="assessmentTypeName" defaultValue={this.props.assessmentType}>
-                            <option> </option>
+                            <option></option>
                             {this.props.assessmentTypes && this.props.assessmentTypes.map(assessmentType => (<option>{assessmentType}</option>))}
                         </Input>
                     </FormGroup>

@@ -3,6 +3,9 @@ import { withRouter } from 'react-router-dom';
 import { withCookies } from 'react-cookie';
 import { Container, Row, Button, Card, CardBody, CardFooter, CardHeader, Modal, ModalBody, ModalHeader, ModalFooter, Form, FormGroup, Label, Input, Collapse } from 'reactstrap';
 import AssessmentBlock from '../assessment-block/AssessmentBlock';
+import classNames from 'classnames/bind';
+import styles from '../settings-modal/DarkMode.scss'; 
+const style = classNames.bind(styles);
 
 class HomePageAssessments extends React.Component {
     constructor(props) {
@@ -160,8 +163,8 @@ class HomePageAssessments extends React.Component {
         return(
             <div style={{height: "100%"}} >
             <Card style={{height: "100%"}}>
-                <CardHeader style={{textAlign: "center", padding: "10px", backgroundColor: "lightGray"}}><h2>Assessments</h2></CardHeader>
-                <CardBody style={{overflowY: "scroll", backgroundColor: "whiteSmoke", height: "100%"}}>
+                <CardHeader style={{textAlign: "center", padding: "10px"}} className={style('header')}><h2>Assessments</h2></CardHeader>
+                <CardBody style={{overflowY: "scroll", height: "100%"}} className={style('content')}>
                     <p style={{opacity: "0.5"}}>{this.state.message}</p>
                     <Container onClick={this.toggleUpdateAssessments}> 
                         {this.state.assessmentObjectArray.map(assessment => (this.state.userSubjects) && (this.state.userSubjects.length > 0) && (<Row className="pb-2"><AssessmentBlock 
@@ -181,6 +184,7 @@ class HomePageAssessments extends React.Component {
                             update={this.fetchAssessmentData}
                             userId={assessment.userId}
                             userSubjectId={assessment.userSubjectId}
+                            length={this.state.assessmentObjectArray.length}
                             onClick={() => (this.setAssessmentId(assessment.id))}/></Row>))}
                         <Button onClick={this.toggleCompleteAssessments} color="dark" className="text-white mb-2 pt-0 pb-0 pl-1 pr-1" style={{opacity: "0.3"}}>Completed</Button>
                         <Collapse isOpen={this.state.completeAssessments}>
@@ -195,7 +199,7 @@ class HomePageAssessments extends React.Component {
                         </Collapse>
                     </Container>
                 </CardBody>
-                <CardFooter style={{backgroundColor: "lightGray"}}>
+                <CardFooter className={style('footer')}>
                     <div style={{textAlign: "center", position: "relative"}}>
                         <Button color="secondary" onClick={this.toggleAssessment}>+ Add new Assessment</Button>
                     </div>

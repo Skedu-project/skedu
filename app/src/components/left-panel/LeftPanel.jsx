@@ -2,6 +2,9 @@ import React from 'react';
 import { Card, CardBody, CardHeader, CardFooter } from 'reactstrap'; 
 import SubjectList from '../subject-list/SubjectList';
 import AddSubject from './AddSubject'; 
+import classNames from 'classnames/bind';
+import styles from '../settings-modal/DarkMode.scss'; 
+const style = classNames.bind(styles);
 
 
 class LeftPanel extends React.Component {
@@ -52,16 +55,16 @@ class LeftPanel extends React.Component {
         //this.changeMessage();
         return (
             <Card style={{height: "100%"}}>
-                <CardHeader style={{backgroundColor: "lightGray"}}>
+                <CardHeader className={style('header')}>
                     <h3 style={{textAlign: "center"}}>Subjects</h3>
                 </CardHeader>
-                <CardBody style={{overflowY: 'scroll', backgroundColor: "white"}}>
+                <CardBody style={{overflowY: 'scroll'}} className={style('content')}>
                     {(this.props.subjects.length == 0) && (<p style={{opacity: "0.5"}}>Please input your subjects</p>)}
                     <SubjectList subjects={userSubjects}  allColors={this.state.allColors} onSave={this.props.refresh}/>
                 </CardBody>
-                <CardFooter style={{backgroundColor: "lightGray"}}>
+                <CardFooter className={style('footer')}>
                     <div style={{textAlign: "center"}}>
-                        <AddSubject allSubjects={this.state.allSubjects} currentGradeLevel={9} allColors={this.state.allColors} onSave={this.props.refresh}/> 
+                        <AddSubject allSubjects={this.state.allSubjects} allColors={this.state.allColors} onSave={this.props.refresh} currentGradeLevel={9}/> 
                     </div>  
                 </CardFooter>
             </Card>

@@ -3,6 +3,9 @@ import { Row, Col, Container, Input, CardTitle, Card, CardBody, CardHeader } fro
 import { withCookies } from 'react-cookie';
 import TimeBlock from './time-block/TimeBlock';
 import logo from './skeduLogo.png';
+import classNames from 'classnames/bind';
+import styles from './settings-modal/DarkMode.scss'; 
+const style = classNames.bind(styles);
 
 
 class TimeBlockList extends React.Component {
@@ -30,7 +33,7 @@ class TimeBlockList extends React.Component {
   }
 
   componentDidUpdate(prevProps) {
-    if (this.props.subjects !== prevProps.subjects) {
+    if ((this.props.subjects !== prevProps.subjects) || (this.props.assessments !== prevProps.assessments)) {
       this.getSubjectFactor();
     }
   }
@@ -61,12 +64,12 @@ class TimeBlockList extends React.Component {
   render() {
     return (
         <Card className="border border-0">
-          <CardHeader style={{backgroundColor: "white", borderBottomColor: "lightGrey", borderBottomWidth: "2px", padding: "0px 0px 0px 6%"}}>
+          <CardHeader style={{borderBottomColor: "lightGrey", borderBottomWidth: "2px", padding: "0px 0px 0px 6%"}} className={style('main')}>
             <CardTitle><h4>Today's Study Time</h4></CardTitle>
           </CardHeader>
-          <CardBody>
+          <CardBody className={style('main')}>
           {(this.state.userSubjectFactorArray.length == 0) && (
-              <Container className="border border-secondary rounded-lg mt-5" style={{height: "40vh"}}>
+              <Container className="border border-secondary rounded-lg mt-5" style={{height: "50vh"}}>
                 {/* <Row className="border-bottom border-secondary" style={{height: "15%", backgroundColor: "rgba(0, 123, 255, 0.5)"}}>
                   
                 </Row> */}
@@ -75,13 +78,14 @@ class TimeBlockList extends React.Component {
                     <h2 className="p-2 text-white">Welcome to Skedu!</h2>
                     <img src={logo} style={{resizeMode: 'contain', height: "85px"}}/>
                   </Col>
-                  <Col xs={9} className="pl-5 pt-4" style={{backgroundColor: "whiteSmoke", textAlign: "left"}}>
+                  <Col xs={9} className="pl-5 pt-4" style={{textAlign: "left"}}>
                     <h6 className="pl-3 pt-3 pb-2">Please do the following to get started:</h6>
                     <p className="pl-4">- Update your profile</p>
                     <p className="pl-4">- Enter your study time</p>
                     <p className="pl-4">- Add your subjects</p>
-                    <p className="pl-5">- Click on the subject block to input your course grade</p>
+                    <p className="pl-5">- Click on the subject block to edit or delete the subject</p>
                     <p className="pl-4">- Add any assessments</p>
+                    <p className="pl-5">- Click on the assessment block to edit or delete the assessment</p>
                   </Col>
                 </Row>
               </Container>
@@ -91,6 +95,7 @@ class TimeBlockList extends React.Component {
                 color={userSubjectFactor.colorId} 
                 subject={userSubjectFactor.subjectName ? userSubjectFactor.subjectName : "--"}  
                 time={userSubjectFactor.studyTime ? Math.round(userSubjectFactor.studyTime) : "--"}
+                length={this.state.userSubjectFactorArray.length}
                 percent={Math.round(100*userSubjectFactor.subjectFactor)} /></Row>))}
             </Container>
           </CardBody>
