@@ -1,6 +1,9 @@
 import React from 'react';
 import { Row, Col, Container, Progress, Modal, ModalBody, ModalHeader, ModalFooter, Input, InputGroup, InputGroupAddon, InputGroupText, Button, FormGroup, Form, Label } from 'reactstrap'; 
 import { withCookies } from 'react-cookie';
+import classNames from 'classnames/bind';
+import styles from '../settings-modal/DarkMode.scss'; 
+const style = classNames.bind(styles);
 
 class Subject extends React.Component {
   constructor(props) {
@@ -58,7 +61,11 @@ class Subject extends React.Component {
     formValues.colorId = formValues.colorId; 
     formValues.currentPoints = formValues.currentPoints;
     formValues.totalPoints = formValues.totalPoints; 
-    this.setState({actualGrade: (formValues.currentPoints/formValues.totalPoints)*100}); 
+    if(formValues.totalPoints == 0){
+      this.setState({actualGrade: 0}); 
+    } else{
+      this.setState({actualGrade: (formValues.currentPoints/formValues.totalPoints)*100}); 
+    }
     this.setState({goalGrade: formValues.goalGrade});
     const formJSON = JSON.stringify(formValues);
     this.updateSubjectInfo(formJSON);
@@ -94,12 +101,12 @@ class Subject extends React.Component {
   render() {
     return (
       <div>
-      <Container onClick={this.toggleUserSubject} style={{marginBottom: "10px", backgroundColor: "whiteSmoke"}}>
+      <Container onClick={this.toggleUserSubject} style={{marginBottom: "10px"}} className={style('content')}>
         <Row style={{border: '1px solid', borderRadius: '7px'/*, height: "8vh"*/}}>
             <Col xs="1" className={this.props.color} style={{ /*width:'20px',*/ borderTopLeftRadius: '7px', borderBottomLeftRadius: '7px'}} />
             <Col xs="9" className="pb-2" style={{textAlign: 'center'}}>
                 <h5>{this.props.name}</h5>
-                <div style={{borderRadius: "2px", backgroundColor: "lightGray"}}><h8 style={{}}>Goal: {this.props.goalGrade}%</h8></div>
+                <div style={{borderRadius: "2px"}} className={style('footer')}><h8 style={{}}>Goal: {this.props.goalGrade}%</h8></div>
                 <div>
                   <Progress multi>
                     <Progress bar value={this.state.actualGrade} max="100">{this.state.actualGrade}</Progress>

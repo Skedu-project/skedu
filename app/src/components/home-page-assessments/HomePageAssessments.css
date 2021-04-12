@@ -1,0 +1,7 @@
+.background{
+    background-color: lightgray; 
+ }
+
+body.dark-mode.background {
+    background-color: black;
+} 

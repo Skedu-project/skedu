@@ -11,7 +11,7 @@ class AssessmentBlock extends React.Component {
     constructor(props) {
         super(props);
         this.state = {
-            assessmentId: this.props.id,
+            assessmentId: 0,
             textColor: "",
             date: new Date().toDateString('en-US'),
             daysToAssessment: 0, 
@@ -21,6 +21,7 @@ class AssessmentBlock extends React.Component {
         this.updateColor = this.updateColor.bind(this);
         this.openAssessmentModal = this.openAssessmentModal.bind(this); 
         this.closeAssessmentModal = this.closeAssessmentModal.bind(this);
+        this.setComponentState = this.setComponentState.bind(this);
     }
 
     updateColor() {
@@ -40,6 +41,19 @@ class AssessmentBlock extends React.Component {
       }
 
     componentDidMount() {
+        this.setComponentState();
+    }
+
+    componentDidUpdate(prevProps, prevState) {
+        if ((this.props.length !== prevProps.length) 
+        || (this.props.color !== prevProps.color)
+        || (this.props.id !== prevProps.id)) {
+          this.setComponentState();
+        }
+      }
+
+    setComponentState() {
+        this.setState({assessmentId: this.props.id});
         this.updateColor();
         //resetting current date on mount
         this.setState({date: new Date().toDateString('en-US')});
@@ -52,7 +66,7 @@ class AssessmentBlock extends React.Component {
     }
 
     async deleteAssessment() {
-        await fetch('/api/users/' + this.state.assessmentId + '/assessments?isComplete=' + !this.props.complete, {
+        const resonse = await fetch('/api/users/' + this.state.assessmentId + '/assessments?isComplete=' + !this.props.complete, {
             method: 'PUT',
             headers: {
                 'Accept': 'application/json',  //receiving data in JSON format in browser
@@ -66,15 +80,15 @@ class AssessmentBlock extends React.Component {
 
     render() {
         return(
-            <Container fluid className="m-0 rounded border border-dark border-2" onClick={this.openAssessmentModal}>
+            <Container fluid className="rounded" style={{border: "1px solid"}}>
                 <Row style={{height: "100%"}}>
                     <Col xs={1} className={"p-0 " + this.props.color} style={{textAlign: "center"}}>
-                        <Input type="radio" onClick={this.deleteAssessment} style={{margin: "0%", transform: "scale(2)", verticalAlign: 'middle', height: '100%', zIndex: "2"}} className={style('checkButton')}/>
+                        <Input name="assessment" type="radio" checked={false} onClick={this.deleteAssessment} style={{margin: "0%", transform: "scale(2)", verticalAlign: 'middle', height: '100%', zIndex: "2"}} className={style('checkButton')}/>
                     </Col>
-                    <Col xs={9} className={this.props.color+" m-0 text-" + this.state.textColor} style={{textAlign: "center", height: "100%"}}>
+                    <Col xs={9} className={this.props.color+" m-0 text-" + this.state.textColor} style={{textAlign: "center", height: "100%"}} onClick={this.openAssessmentModal}>
                         <h5 className="p-2 m-0" style={{}}>{this.props.subject}</h5>
                     </Col>
-                    <Col xs={2} style={{textAlign: "center"}} className="m-0 p-2">
+                    <Col xs={2} style={{textAlign: "center", borderLeft:"1px solid"}} className="m-0 p-2">
                         <h6 className="p-0 m-0">{this.props.date}</h6>
                     </Col>
                 </Row>

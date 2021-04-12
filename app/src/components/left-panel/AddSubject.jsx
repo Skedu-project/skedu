@@ -1,13 +1,17 @@
 import React from 'react';
 import { Button, Form, FormGroup, Label, Input, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'; 
 import { withCookies } from 'react-cookie';
+import classNames from 'classnames/bind';
+import styles from '../settings-modal/DarkMode.scss'; 
+const style = classNames.bind(styles);
 
 class AddSubject extends React.Component {
 
     constructor(props) {
         super(props); 
         this.state  = {
-          isModalOpen: false
+          isModalOpen: false,
+          cookie: this.props.cookies
         };
 
         this.toggle = this.toggle.bind(this);
@@ -30,7 +34,7 @@ class AddSubject extends React.Component {
       //   goalGrade: 80,
       //   colorId: 1,
       // }
-      formValues.userGradeLevel = this.props.currentGradeLevel;
+      formValues.userGradeLevel = this.state.cookie.get('currentGradeLevel');
       const formJSON = JSON.stringify(formValues);
       this.saveSubject(formJSON); 
     }
@@ -50,7 +54,7 @@ class AddSubject extends React.Component {
     render() {
         return (
           <div>
-          <Button color='secondary' onClick={this.toggle}>
+          <Button color='secondary' onClick={this.toggle} >
             + Add Subject
           </Button>
           <Modal isOpen={this.state.isModalOpen} toggle={this.toggle} className={this.props.className}>
