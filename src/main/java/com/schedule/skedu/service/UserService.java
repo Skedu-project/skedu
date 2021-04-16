@@ -8,6 +8,12 @@ import com.schedule.skedu.model.UserRepository;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
+import org.apache.commons.codec.binary.Hex;
+import javax.crypto.SecretKey;
+import javax.crypto.SecretKeyFactory;
+import javax.crypto.spec.PBEKeySpec;
+import java.security.NoSuchAlgorithmException;
+import java.security.spec.InvalidKeySpecException;
 
 @Component
 public class UserService {
@@ -23,6 +29,8 @@ public class UserService {
     }
 
     public User addUser(User user) {
+        String encryptedPassword = encryptPassword(user.getPassword());
+        user.setPassword(encryptedPassword);
         return userRepository.save(user);
     }
 
@@ -35,7 +43,8 @@ public class UserService {
     }
 
     public Optional<User> findUserByEmailAndPassword(String email, String password) {
-        return userRepository.findByEmailAndPassword(email, password);
+        String encryptedPassword = encryptPassword(password); 
+        return userRepository.findByEmailAndPassword(email, encryptedPassword);
     }
 
     public User userIsSignedIn(User user) {
@@ -48,5 +57,32 @@ public class UserService {
 
     public User updateProfile(User user) {
         return userRepository.save(user);
+    }
+
+    public String encryptPassword(String password){
+        String salt = "1234";
+        int iterations = 10000;
+        int keyLength = 512;
+        char[] passwordChars = password.toCharArray();
+        byte[] saltBytes = salt.getBytes();
+
+        byte[] hashedBytes = hashPassword(passwordChars, saltBytes, iterations, keyLength);
+        String hashedString = Hex.encodeHexString(hashedBytes);
+
+        System.out.println(hashedString);
+        return hashedString; 
+    }
+
+    public static byte[] hashPassword( final char[] password, final byte[] salt, final int iterations, final int keyLength ) {
+
+        try {
+            SecretKeyFactory skf = SecretKeyFactory.getInstance( "PBKDF2WithHmacSHA512" );
+            PBEKeySpec spec = new PBEKeySpec( password, salt, iterations, keyLength );
+            SecretKey key = skf.generateSecret( spec );
+            byte[] res = key.getEncoded( );
+            return res;
+        } catch ( NoSuchAlgorithmException | InvalidKeySpecException e ) {
+            throw new RuntimeException( e );
+        }
     }
 }

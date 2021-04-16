@@ -85,4 +85,19 @@ public class UserController {
         User updatedUser = userService.updateProfile(user); 
         return updatedUser; 
     }
+
+    @PutMapping("/users/{id}/password")
+    public String encryptPassword(@PathVariable Long id, @RequestParam String password){
+        User user = userService.getUser(id).get();
+        String encodedPassword = userService.encryptPassword(password); 
+        user.setPassword(encodedPassword);
+        return encodedPassword; 
+    }
+
+    @GetMapping("/users/testPassword")
+        public String testPassword(@RequestParam String password){
+        String encodedPassword = userService.encryptPassword(password); 
+        System.out.println(encodedPassword);
+        return encodedPassword; 
+    }
 }
